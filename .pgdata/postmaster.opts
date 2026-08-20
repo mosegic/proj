@@ -1,0 +1,1 @@
+/usr/lib/postgresql/16/bin/postgres "-D" "/home/moses/proj/.pgdata" "-p" "5433" "-h" "127.0.0.1" "-k" "/tmp/pgsocket"
