@@ -28,7 +28,7 @@ export default function HomePage() {
         <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
           Create beautiful digitalmobile menu, manage your catalog in real-time,
           generate scannable QR codes per table — all from one dashboard.
-          Products and Services, Profit Focus, Scale.
+                                  Products and Services, Profit Focus, Scale.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/register">
