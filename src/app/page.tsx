@@ -15,25 +15,24 @@ export default function HomePage() {
           <Link href="/login">
             <Button variant="ghost">Sign In</Button>
           </Link>
-          <Link href="/register">
-            <Button>Get Started</Button>
-          </Link>
+
         </div>
       </nav>
 
       <main className="max-w-6xl mx-auto px-4 py-20 text-center">
         <h1 className="text-4xl sm:text-6xl font-bold text-gray-900 leading-tight">
-          Digital Menus for
+          Online-Menu
           <br />
-          <span className="text-blue-600">Modern Restaurants</span>
+          <span className="text-blue-600">Modern Restaurant</span>
         </h1>
         <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-          Create beautiful mobile menus, manage your catalog in real-time, and
-          generate scannable QR codes for every table — all from one dashboard.
+          Create beautiful digitalmobile menu, manage your catalog in real-time,
+          generate scannable QR codes per table — all from one dashboard.
+          Products and Services, Profit Focus, Scale.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/register">
-            <Button size="lg">Start Free — Register Your Restaurant</Button>
+            <Button size="lg">Start Free</Button>
           </Link>
           <Link href="/menu/demo-cafe">
             <Button size="lg" variant="secondary">
@@ -74,3 +73,4 @@ export default function HomePage() {
     </div>
   );
 }
+
