@@ -36,7 +36,7 @@ export default function HomePage() {
           </Link>
           <Link href="/menu/demo-cafe">
             <Button size="lg" variant="secondary">
-              View Demo Menu
+              Demo
             </Button>
           </Link>
         </div>
