@@ -10,7 +10,8 @@ export default function HomePage() {
             M
           </div>
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
-      
+       <div <span className="font-normal text-base text-gray-400">onlinemenusaas</span>
+          </div>
         
         </div>
         <div className="flex gap-3">
