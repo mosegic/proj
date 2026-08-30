@@ -10,10 +10,8 @@ export default function HomePage() {
             M
           </div>
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
-         <p <span className="font-normal text-base text-gray-900">onlinemenusaas@gmail.com</span>
-        </p>
-          
-            <span className="font-bold text-xl text-gray-900">onlinemenusaas@gmail.com</span>
+          <span className="font-normal text-base text-gray-900">onlinemenusaas@gmail.com</span>
+        
         </div>
         <div className="flex gap-3">
           <Link href="/login">
