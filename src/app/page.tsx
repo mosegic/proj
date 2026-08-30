@@ -10,7 +10,10 @@ export default function HomePage() {
             M
           </div>
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
-          <span className="font-normal text-base text-gray-900">onlinemenusaas@gmail.com</span>
+          <div 
+            <span className="font-normal text-base text-gray-900">onlinemenusaas@gmail.com</span>M
+          </div>
+          
         
         </div>
         <div className="flex gap-3">
