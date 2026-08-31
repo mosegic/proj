@@ -160,7 +160,7 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
 
       <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 text-center">
         <p className="text-xs text-gray-400">
-          Powered by MenuSaaS
+          MenuSaaS onlinemenusaas@gmail.com
         </p>
       </footer>
     </div>
