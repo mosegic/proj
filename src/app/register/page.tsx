@@ -12,7 +12,7 @@ export default function RegisterPage() {
             </div>
             <span className="font-bold text-xl">MenuSaaS</span>
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Register Your Restaurant</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Register Your Kind of Business [Restaurant, Supermarket, Pharmacy, Salon&Spa, Hardware, Apartments]</h1>
           <p className="text-sm text-gray-600 mt-1">
             Set up your digital menu in minutes
           </p>
