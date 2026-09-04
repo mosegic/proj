@@ -52,9 +52,7 @@ export function LoginForm() {
         onChange={(e) => setForm({ ...form, password: e.target.value })}
         required
       />
-      <Button type="submit" loading={loading} className="w-full">
-        Sign In
-      </Button>
+    
       <p className="text-center text-sm text-gray-600">
         Don&apos;t have an account?{" "}
         <Link href="/register" className="font-medium text-blue-600 hover:underline">
