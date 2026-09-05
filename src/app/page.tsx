@@ -17,10 +17,17 @@ export default function HomePage() {
           <Link href="/login">
             <Button variant="ghost">Sign In</Button>
           </Link>
- <Link href="/login">
+ 
+        </div>
+
+        <div className="flex gap-3">
+          <Link href="/login">
             <Button variant="ghost">Sign In</Button>
           </Link>
+ 
         </div>
+
+        
       </nav>
 
       <main className="max-w-6xl mx-auto px-4 py-20 text-center">
