@@ -13,14 +13,7 @@ export default function HomePage() {
        
         
         </div>
-      <div className="flex gap-3">
-  <Button variant="ghost" asChild>
-    <Link href="/login">Sign In</Link>
-  </Button>
-  <Button variant="default" asChild>
-    <Link href="/register">Sign Up</Link>
-  </Button>
-</div>
+     <div className="flex gap-3"> <Link href="/login"> <Button variant="ghost">Sign In</Button> </Link> </div>
 
 
 
