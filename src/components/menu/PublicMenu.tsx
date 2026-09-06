@@ -158,9 +158,6 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
           ))
         )}
         
-        
-        <Button type="Aptitude" loading={loading} className="w-full"></Button>
-        
       
       </main>
    
