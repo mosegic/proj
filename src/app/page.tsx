@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from 'next/image'; // [ADD] Import the Next.js Image component
 import { Button } from "@/components/ui/Button";
 
 export default function HomePage() {
@@ -7,10 +6,9 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <nav className="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2">
- <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
             M
           </div>
-
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
        
         
