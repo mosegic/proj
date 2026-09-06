@@ -154,16 +154,13 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
                 ))}
               </div>
             </section>
- 
           ))
         )}
-        
-      
       </main>
-   
+
       <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 text-center">
         <p className="text-xs text-gray-400">
-          MenuSaaS onlinemenusaas@gmail.com
+          Powered by MenuSaaS onlinemenusaas@gmail.com
         </p>
       </footer>
     </div>
