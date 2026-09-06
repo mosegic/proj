@@ -157,10 +157,13 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
  
           ))
         )}
-      </main>
-   <Button type="Aptitude" loading={loading} className="w-full">
         
-      </Button>
+        
+        <Button type="Aptitude" loading={loading} className="w-full"></Button>
+        
+      
+      </main>
+   
       <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 text-center">
         <p className="text-xs text-gray-400">
           MenuSaaS onlinemenusaas@gmail.com
