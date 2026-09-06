@@ -1,5 +1,5 @@
 import Link from "next/link";
-import logo from './logo.png'; // Adjust the path to your logo file
+import Image from 'next/image'; // [ADD] Import the Next.js Image component
 import { Button } from "@/components/ui/Button";
 
 export default function HomePage() {
