@@ -1,4 +1,5 @@
 import Link from "next/link";
+import logo from './logo.png'; // Adjust the path to your logo file
 import { Button } from "@/components/ui/Button";
 
 export default function HomePage() {
@@ -7,11 +8,10 @@ export default function HomePage() {
       <nav className="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2">
          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center overflow-hidden">
-  <img 
-    src="https://res.cloudinary.com/mm0aipwg/image/upload/v1788645443/Untitled_design_20260906_005542_0000.png" 
-    alt="Logo" 
-    className="w-full h-full object-cover"
-  />
+  function Header() {
+  return <img src={logo} alt="Company Logo" />; // Use curly braces to reference the variable
+}
+
 </div>
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
        
