@@ -8,17 +8,9 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         
         {/* Header / Logo */}
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 mb-4">
-            {/* [REPLACED] Text logo replaced with the Image component */}
-            <Image 
-              src="/logo.png" 
-              alt="MenuSaaS Logo" 
-              width={32} 
-              height={32} 
-              className="rounded-lg object-contain"
-              priority
-            />
+       <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+              M
+            </div>
             <span className="font-bold text-xl">MenuSaaS</span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">
