@@ -10,7 +10,7 @@ export default function HomePage() {
  <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
             M
           </div>
-</div>
+
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
        
         
