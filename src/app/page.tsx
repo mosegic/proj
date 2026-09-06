@@ -6,9 +6,13 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <nav className="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-            M
-          </div>
+         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center overflow-hidden">
+  <img 
+    src="https://res.cloudinary.com/mm0aipwg/image/upload/v1788645443/Untitled_design_20260906_005542_0000.png" 
+    alt="Logo" 
+    className="w-full h-full object-cover"
+  />
+</div>
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
        
         
