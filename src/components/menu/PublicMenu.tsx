@@ -184,4 +184,3 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
     </div>
   );
 }
-
