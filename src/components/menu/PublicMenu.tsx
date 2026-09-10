@@ -77,10 +77,6 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
         </div>
       </header>
 
-import React, { useState } from 'react';
-
-// ... inside your component code ...
-
 <main className="max-w-lg mx-auto px-4 py-6 pb-20 space-y-8">
   {restaurant.categories.length === 0 ? (
     <p className="text-center text-gray-500 py-12">Menu coming soon...</p>
@@ -97,96 +93,79 @@ import React, { useState } from 'react';
           <p className="text-sm text-gray-500 mb-3">{category.description}</p>
         )}
         <div className="space-y-3">
-          {category.items.map((item) => {
-            // Track loading state for each item's image individually
-            const [isImageLoading, setIsImageLoading] = useState(true);
+          {category.items.map((item) => (
+            <article
+              key={item.id}
+              className={`bg-white rounded-xl shadow-sm overflow-hidden ${
+                item.isSoldOut ? "opacity-50" : ""
+              }`}
+            >
+              <div className="p-4 flex flex-col gap-3">
+                {/* Top Section: Title & Price */}
+                <div className="flex justify-between items-start gap-4">
+                  <h3 className="font-semibold text-gray-900 text-base">{item.name}</h3>
+                  <span
+                    className="font-bold text-base whitespace-nowrap"
+                    style={{ color: theme }}
+                  >
+                    {formatPrice(item.price)}
+                  </span>
+                </div>
 
-            return (
-              <article
-                key={item.id}
-                className={`bg-white rounded-xl shadow-sm overflow-hidden ${
-                  item.isSoldOut ? "opacity-50" : ""
-                }`}
-              >
-                <div className="p-4 flex flex-col gap-3">
-                  {/* Top Section: Title & Price */}
-                  <div className="flex justify-between items-start gap-4">
-                    <h3 className="font-semibold text-gray-900 text-base">{item.name}</h3>
-                    <span
-                      className="font-bold text-base whitespace-nowrap"
-                      style={{ color: theme }}
-                    >
-                      {formatPrice(item.price)}
-                    </span>
+                {/* Middle Section: Description */}
+                {item.description && (
+                  <p className="text-sm text-gray-600 line-clamp-3">
+                    {item.description}
+                  </p>
+                )}
+
+                {/* Original Uncropped Image Box */}
+                {item.imageUrl && (
+                  <div className="w-full aspect-auto h-auto mt-1 overflow-hidden rounded-lg bg-gray-50">
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.02]"
+                      loading="lazy"
+                    />
                   </div>
+                )}
 
-                  {/* Middle Section: Description */}
-                  {item.description && (
-                    <p className="text-sm text-gray-600 line-clamp-3">
-                      {item.description}
-                    </p>
+                {/* Bottom Section: Badges & Options */}
+                <div className="space-y-2 mt-1">
+                  {item.isSoldOut && (
+                    <span className="inline-block text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">
+                      Sold Out
+                    </span>
                   )}
-
-                  {/* Bound Container with Shimmer Loading Effect */}
-                  {item.imageUrl && (
-                    <div className="relative w-full max-h-64 overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center">
-                      
-                      {/* Skeletal Shimmer Layer */}
-                      {isImageLoading && (
-                        <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 bg-[length:200%_100%] animate-shimmer min-h-[160px] w-full" />
-                      )}
-
-                      <img
-                        src={item.imageUrl}
-                        alt={item.name}
-                        onLoad={() => setIsImageLoading(false)}
-                        onError={() => setIsImageLoading(false)}
-                        className={`w-full max-h-64 object-cover transition-all duration-500 ${
-                          isImageLoading ? "opacity-0 scale-95" : "opacity-100 scale-100 hover:scale-[1.02]"
-                        }`}
-                        loading="lazy"
-                      />
+                  {!item.isAvailable && !item.isSoldOut && (
+                    <span className="inline-block text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">
+                      Unavailable
+                    </span>
+                  )}
+                  {item.options.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {item.options.map((opt) => (
+                        <span
+                          key={opt.id}
+                          className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full"
+                        >
+                          {opt.name}
+                          {parseFloat(String(opt.priceDelta)) > 0 &&
+                            ` +${formatPrice(opt.priceDelta)}`}
+                        </span>
+                      ))}
                     </div>
                   )}
-
-                  {/* Bottom Section: Badges & Options */}
-                  <div className="space-y-2 mt-1">
-                    {item.isSoldOut && (
-                      <span className="inline-block text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">
-                        Sold Out
-                      </span>
-                    )}
-                    {!item.isAvailable && !item.isSoldOut && (
-                      <span className="inline-block text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">
-                        Unavailable
-                    </span>
-                    )}
-                    {item.options.length > 0 && (
-                      <div className="flex flex-wrap gap-1">
-                        {item.options.map((opt) => (
-                          <span
-                            key={opt.id}
-                            className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full"
-                          >
-                            {opt.name}
-                            {parseFloat(String(opt.priceDelta)) > 0 &&
-                              ` +${formatPrice(opt.priceDelta)}`}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
                 </div>
-              </article>
-            );
-          })}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
     ))
   )}
 </main>
-
-
 
 
       <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 text-center">
