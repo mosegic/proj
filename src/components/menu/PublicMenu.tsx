@@ -119,13 +119,13 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
                   </p>
                 )}
 
-                {/* Enlarged Image Layout: Placed explicitly below the description */}
+                {/* Original Uncropped Image Box */}
                 {item.imageUrl && (
-                  <div className="w-full h-48 mt-1 overflow-hidden rounded-lg">
+                  <div className="w-full aspect-auto h-auto mt-1 overflow-hidden rounded-lg bg-gray-50">
                     <img
                       src={item.imageUrl}
                       alt={item.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.02]"
                       loading="lazy"
                     />
                   </div>
@@ -166,6 +166,7 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
     ))
   )}
 </main>
+
 
 
       <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 text-center">
