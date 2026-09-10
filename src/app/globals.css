@@ -10,18 +10,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-
-  /* Define your custom shimmer keyframes */
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  /* Define your custom animation utility */
-  --animate-shimmer: shimmer 2s infinite linear;
-
-  /* Define your custom background size utility */
-  --background-size-shimmer: 200% 100%;
 }
 
 body {
