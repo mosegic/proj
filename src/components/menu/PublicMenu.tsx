@@ -119,17 +119,18 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
                   </p>
                 )}
 
-                {/* Original Uncropped Image Box with Max Height Constraint */}
-                {item.imageUrl && (
-                  <div className="w-full max-h-64 aspect-auto mt-1 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center">
-                    <img
-                      src={item.imageUrl}
-                      alt={item.name}
-                      className="w-full max-h-64 object-contain transition-transform duration-300 hover:scale-[1.02]"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
+         {/* Original Uncropped Image Box with Stable Height Constraint */}
+{item.imageUrl && (
+  <div className="w-full h-48 sm:h-56 mt-2 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center">
+    <img
+      src={item.imageUrl}
+      alt={item.name}
+      className="w-full h-full object-contain transition-transform duration-300 hover:scale-[1.02]"
+      loading="lazy"
+    />
+  </div>
+)}
+
 
                 {/* Bottom Section: Badges & Options */}
                 <div className="space-y-2 mt-1">
