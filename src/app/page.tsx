@@ -27,8 +27,7 @@ export default function HomePage() {
           <span className="text-blue-600">Modern Restaurant</span>
         </h1>
         <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-          Beautiful mobile menu, manage catalog in real-time,
-          generate scannable QR codes — all from one dashboard.
+          All from one dashboard.
           Products and Services, Profit Focus, Scale.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
