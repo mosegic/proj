@@ -49,6 +49,7 @@ JWT_SECRET="your-random-secret"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 PAYSTACK_SECRET_KEY="sk_test_..."
 PAYSTACK_PLAN_CODE="PLN_..."
+PAYSTACK_AMOUNT_KOBO="500000"
 ```
 
 ### 2. Set up the database
