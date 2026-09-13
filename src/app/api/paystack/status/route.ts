@@ -1,0 +1,15 @@
+import { NextResponse } from "next/server";
+import { getSession } from "@/lib/auth";
+import db from "@/lib/db";
+
+export async function GET() {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const restaurant = await db.restaurant.findFirst({
+    where: { ownerId: session.userId },
+    orderBy: { createdAt: "desc" },
+    include: { subscription: true },
+  });
+  if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+  return NextResponse.json({ subscription: restaurant.subscription });
+}

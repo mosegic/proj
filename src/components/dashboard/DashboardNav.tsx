@@ -19,6 +19,7 @@ const navItems = [
   { href: "/dashboard/menu", label: "Menu Items", icon: "🍽️" },
   { href: "/dashboard/tables", label: "Tables & QR", icon: "📱" },
   { href: "/dashboard/settings", label: "Settings", icon: "⚙️" },
+  { href: "/dashboard/billing", label: "Billing", icon: "💳" },
 ];
 
 export function DashboardNav({ restaurant }: DashboardNavProps) {
