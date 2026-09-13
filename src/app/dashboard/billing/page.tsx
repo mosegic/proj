@@ -43,13 +43,13 @@ export default function BillingPage() {
       .finally(() => setLoading(false));
   }, [searchParams]);
 
-  async function subscribe(plan: "standard" | "elite") {
+  async function subscribe(plan: "standard" | "elite", interval: "monthly" | "annually") {
     setError("");
     setStarting(true);
     const response = await fetch("/api/paystack/initialize", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plan }),
+      body: JSON.stringify({ plan, interval }),
     });
     const data = await response.json();
     if (!response.ok) {
@@ -102,11 +102,17 @@ export default function BillingPage() {
               >
                 Start free month
               </Button>
-              <Button disabled={starting} onClick={() => subscribe("standard")}>
+              <Button disabled={starting} onClick={() => subscribe("standard", "monthly")}>
                 Standard — ₦15,000/month
               </Button>
-              <Button disabled={starting} onClick={() => subscribe("elite")}>
+              <Button disabled={starting} onClick={() => subscribe("standard", "annually")}>
+                Standard — ₦150,000/year
+              </Button>
+              <Button disabled={starting} onClick={() => subscribe("elite", "monthly")}>
                 Elite — ₦45,000/month
+              </Button>
+              <Button disabled={starting} onClick={() => subscribe("elite", "annually")}>
+                Elite — ₦450,000/year
               </Button>
             </div>
           </div>

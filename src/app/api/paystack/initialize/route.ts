@@ -8,6 +8,7 @@ import {
   initializePaystackTransaction,
 } from "@/lib/paystack";
 import type { PaidPlan } from "@/lib/paystack";
+import type { BillingInterval } from "@/lib/paystack";
 
 export async function POST(request: Request) {
   const session = await getSession();
@@ -26,15 +27,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Subscription is already active" }, { status: 409 });
   }
 
-  const body = (await request.json().catch(() => ({}))) as { plan?: PaidPlan };
+  const body = (await request.json().catch(() => ({}))) as {
+    plan?: PaidPlan;
+    interval?: BillingInterval;
+  };
   if (body.plan !== "standard" && body.plan !== "elite") {
     return NextResponse.json({ error: "Choose a valid paid plan" }, { status: 400 });
+  }
+  if (body.interval !== "monthly" && body.interval !== "annually") {
+    return NextResponse.json({ error: "Choose a valid billing interval" }, { status: 400 });
   }
 
   const reference = `menu_${restaurant.id}_${Date.now()}`;
   try {
-    const planCode = getPaystackPlanCode(body.plan);
-    const amount = getPaystackAmount(body.plan);
+    const planCode = getPaystackPlanCode(body.plan, body.interval);
+    const amount = getPaystackAmount(body.plan, body.interval);
     const transaction = await initializePaystackTransaction({
       email: session.email,
       reference,
