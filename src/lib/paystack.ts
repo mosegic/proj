@@ -42,22 +42,32 @@ async function paystackRequest<T>(path: string, init?: RequestInit) {
 }
 
 export type PaidPlan = "standard" | "elite";
+export type BillingInterval = "monthly" | "annually";
 
-const paidPlanDefaults: Record<PaidPlan, { amount: number; envKey: string }> = {
-  standard: { amount: 1500000, envKey: "PAYSTACK_STANDARD_PLAN_CODE" },
-  elite: { amount: 4500000, envKey: "PAYSTACK_ELITE_PLAN_CODE" },
+const paidPlanDefaults: Record<
+  PaidPlan,
+  Record<BillingInterval, { amount: number; envKey: string }>
+> = {
+  standard: {
+    monthly: { amount: 1500000, envKey: "PAYSTACK_STANDARD_MONTHLY_PLAN_CODE" },
+    annually: { amount: 15000000, envKey: "PAYSTACK_STANDARD_ANNUAL_PLAN_CODE" },
+  },
+  elite: {
+    monthly: { amount: 4500000, envKey: "PAYSTACK_ELITE_MONTHLY_PLAN_CODE" },
+    annually: { amount: 45000000, envKey: "PAYSTACK_ELITE_ANNUAL_PLAN_CODE" },
+  },
 };
 
-export function getPaystackPlanCode(plan: PaidPlan) {
-  const planCode = process.env[paidPlanDefaults[plan].envKey];
-  if (!planCode) throw new Error("PAYSTACK_PLAN_CODE is not configured");
+export function getPaystackPlanCode(plan: PaidPlan, interval: BillingInterval) {
+  const planCode = process.env[paidPlanDefaults[plan][interval].envKey];
+  if (!planCode) throw new Error("Paystack plan code is not configured");
   return planCode;
 }
 
-export function getPaystackAmount(plan: PaidPlan) {
+export function getPaystackAmount(plan: PaidPlan, interval: BillingInterval) {
   const amount = Number.parseInt(
-    process.env[`PAYSTACK_${plan.toUpperCase()}_AMOUNT_KOBO`] ||
-      String(paidPlanDefaults[plan].amount),
+    process.env[`PAYSTACK_${plan.toUpperCase()}_${interval.toUpperCase()}_AMOUNT_KOBO`] ||
+      String(paidPlanDefaults[plan][interval].amount),
     10,
   );
   if (!Number.isSafeInteger(amount) || amount <= 0) {

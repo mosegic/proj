@@ -49,10 +49,14 @@ DATABASE_URL="postgresql://postgres:postgres@localhost:5432/menusaas"
 JWT_SECRET="your-random-secret"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 PAYSTACK_SECRET_KEY="sk_test_..."
-PAYSTACK_STANDARD_PLAN_CODE="PLN_..."
-PAYSTACK_ELITE_PLAN_CODE="PLN_..."
-PAYSTACK_STANDARD_AMOUNT_KOBO="1500000"
-PAYSTACK_ELITE_AMOUNT_KOBO="4500000"
+PAYSTACK_STANDARD_MONTHLY_PLAN_CODE="PLN_..."
+PAYSTACK_STANDARD_ANNUAL_PLAN_CODE="PLN_..."
+PAYSTACK_ELITE_MONTHLY_PLAN_CODE="PLN_..."
+PAYSTACK_ELITE_ANNUAL_PLAN_CODE="PLN_..."
+PAYSTACK_STANDARD_MONTHLY_AMOUNT_KOBO="1500000"
+PAYSTACK_STANDARD_ANNUAL_AMOUNT_KOBO="15000000"
+PAYSTACK_ELITE_MONTHLY_AMOUNT_KOBO="4500000"
+PAYSTACK_ELITE_ANNUAL_AMOUNT_KOBO="45000000"
 ```
 
 Subscription pricing is configured as:
@@ -62,6 +66,8 @@ Subscription pricing is configured as:
 | Free | 1 month trial |
 | Business Standard | ₦15,000/month |
 | Business Elite | ₦45,000/month |
+| Business Standard | ₦150,000/year |
+| Business Elite | ₦450,000/year |
 
 ### 2. Set up the database
 
