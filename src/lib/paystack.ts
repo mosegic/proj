@@ -47,6 +47,14 @@ export function getPaystackPlanCode() {
   return planCode;
 }
 
+export function getPaystackAmount() {
+  const amount = Number.parseInt(process.env.PAYSTACK_AMOUNT_KOBO || "500000", 10);
+  if (!Number.isSafeInteger(amount) || amount <= 0) {
+    throw new Error("PAYSTACK_AMOUNT_KOBO must be a positive integer");
+  }
+  return amount;
+}
+
 export function getPaystackCallbackUrl() {
   return `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/dashboard/billing`;
 }
@@ -54,6 +62,7 @@ export function getPaystackCallbackUrl() {
 export function initializePaystackTransaction(payload: {
   email: string;
   reference: string;
+  amount: number;
   plan: string;
   callback_url: string;
   metadata: { restaurantId: string };

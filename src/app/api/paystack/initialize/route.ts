@@ -3,6 +3,7 @@ import { getSession } from "@/lib/auth";
 import db from "@/lib/db";
 import {
   getPaystackCallbackUrl,
+  getPaystackAmount,
   getPaystackPlanCode,
   initializePaystackTransaction,
 } from "@/lib/paystack";
@@ -27,9 +28,11 @@ export async function POST() {
   const reference = `menu_${restaurant.id}_${Date.now()}`;
   try {
     const planCode = getPaystackPlanCode();
+    const amount = getPaystackAmount();
     const transaction = await initializePaystackTransaction({
       email: session.email,
       reference,
+      amount,
       plan: planCode,
       callback_url: getPaystackCallbackUrl(),
       metadata: { restaurantId: restaurant.id },
