@@ -7,8 +7,9 @@ import {
   getPaystackPlanCode,
   initializePaystackTransaction,
 } from "@/lib/paystack";
+import type { PaidPlan } from "@/lib/paystack";
 
-export async function POST() {
+export async function POST(request: Request) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -25,10 +26,15 @@ export async function POST() {
     return NextResponse.json({ error: "Subscription is already active" }, { status: 409 });
   }
 
+  const body = (await request.json().catch(() => ({}))) as { plan?: PaidPlan };
+  if (body.plan !== "standard" && body.plan !== "elite") {
+    return NextResponse.json({ error: "Choose a valid paid plan" }, { status: 400 });
+  }
+
   const reference = `menu_${restaurant.id}_${Date.now()}`;
   try {
-    const planCode = getPaystackPlanCode();
-    const amount = getPaystackAmount();
+    const planCode = getPaystackPlanCode(body.plan);
+    const amount = getPaystackAmount(body.plan);
     const transaction = await initializePaystackTransaction({
       email: session.email,
       reference,
@@ -48,8 +54,8 @@ export async function POST() {
       },
       update: {
         status: "pending",
-        email: session.email,
         planCode,
+        email: session.email,
         transactionReference: reference,
       },
     });

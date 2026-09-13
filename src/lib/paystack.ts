@@ -41,14 +41,25 @@ async function paystackRequest<T>(path: string, init?: RequestInit) {
   return body.data;
 }
 
-export function getPaystackPlanCode() {
-  const planCode = process.env.PAYSTACK_PLAN_CODE;
+export type PaidPlan = "standard" | "elite";
+
+const paidPlanDefaults: Record<PaidPlan, { amount: number; envKey: string }> = {
+  standard: { amount: 1500000, envKey: "PAYSTACK_STANDARD_PLAN_CODE" },
+  elite: { amount: 4500000, envKey: "PAYSTACK_ELITE_PLAN_CODE" },
+};
+
+export function getPaystackPlanCode(plan: PaidPlan) {
+  const planCode = process.env[paidPlanDefaults[plan].envKey];
   if (!planCode) throw new Error("PAYSTACK_PLAN_CODE is not configured");
   return planCode;
 }
 
-export function getPaystackAmount() {
-  const amount = Number.parseInt(process.env.PAYSTACK_AMOUNT_KOBO || "500000", 10);
+export function getPaystackAmount(plan: PaidPlan) {
+  const amount = Number.parseInt(
+    process.env[`PAYSTACK_${plan.toUpperCase()}_AMOUNT_KOBO`] ||
+      String(paidPlanDefaults[plan].amount),
+    10,
+  );
   if (!Number.isSafeInteger(amount) || amount <= 0) {
     throw new Error("PAYSTACK_AMOUNT_KOBO must be a positive integer");
   }
