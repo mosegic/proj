@@ -47,6 +47,8 @@ Update `.env` with your connection string:
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/menusaas"
 JWT_SECRET="your-random-secret"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
+PAYSTACK_SECRET_KEY="sk_test_..."
+PAYSTACK_PLAN_CODE="PLN_..."
 ```
 
 ### 2. Set up the database
@@ -83,6 +85,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/dashboard/menu` | Manage dishes & pricing |
 | `/dashboard/tables` | Tables & QR code generation |
 | `/dashboard/settings` | Business settings & theme |
+| `/dashboard/billing` | Paystack subscription management |
 | `/menu/[slug]` | Public mobile menu |
 | `/menu/[slug]/table/[n]` | Table-specific menu view |
 
@@ -94,3 +97,6 @@ Open [http://localhost:3000](http://localhost:3000).
 - `POST /api/menu-items` — Create menu item
 - `PATCH /api/menu-items/[id]` — Update item (price, sold-out, visibility)
 - `GET /api/qr/[tableId]` — Generate QR code (PNG or SVG)
+- `POST /api/paystack/initialize` — Start a Paystack subscription checkout
+- `GET /api/paystack/verify/[reference]` — Verify a completed payment
+- `POST /api/paystack/webhook` — Process signed Paystack subscription events
