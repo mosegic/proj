@@ -55,12 +55,14 @@ export async function POST(request: Request) {
       where: { restaurantId: restaurant.id },
       create: {
         restaurantId: restaurant.id,
+        tier: body.plan,
         email: session.email,
         planCode,
         transactionReference: reference,
       },
       update: {
         status: "pending",
+        tier: body.plan,
         planCode,
         email: session.email,
         transactionReference: reference,

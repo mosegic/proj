@@ -3,6 +3,7 @@ import db from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { menuItemSchema } from "@/lib/validations";
 import { jsonError, jsonSuccess, parseBody } from "@/lib/api-utils";
+import { canAddMenuItem, TIER_LIMITS } from "@/lib/tier-limits";
 
 export async function GET(request: NextRequest) {
   const session = await getSession();
@@ -54,6 +55,14 @@ export async function POST(request: NextRequest) {
 
   if (!category || category.restaurant.ownerId !== session.userId) {
     return jsonError("Category not found", 404);
+  }
+
+  const itemLimit = await canAddMenuItem(category.restaurantId, category.id);
+  if (!itemLimit.allowed) {
+    return jsonError(
+      `Standard plan is limited to ${TIER_LIMITS.standard.maxItemsPerCategory} items per category. Upgrade to Business Elite to add more.`,
+      403,
+    );
   }
 
   const maxOrder = await db.menuItem.aggregate({

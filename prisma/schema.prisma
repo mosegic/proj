@@ -43,6 +43,7 @@ model Subscription {
   restaurantId         String     @unique
   restaurant           Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   status               String     @default("pending")
+  tier                 String     @default("standard")
   planCode             String
   customerCode         String?
   subscriptionCode     String?
