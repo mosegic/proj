@@ -20,11 +20,13 @@ interface MenuItem {
 interface Category {
   id: string;
   name: string;
+  _count?: { items: number };
 }
 
 export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [tier, setTier] = useState<"standard" | "elite">("standard");
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({
@@ -44,6 +46,7 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
     const catsData = await catsRes.json();
     setItems(itemsData.items || []);
     setCategories(catsData.categories || []);
+    setTier(catsData.tier === "elite" ? "elite" : "standard");
     if (catsData.categories?.length && !form.categoryId) {
       setForm((f) => ({ ...f, categoryId: catsData.categories[0].id }));
     }
@@ -98,6 +101,9 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
       <div key={i} className="h-20 bg-gray-100 rounded-lg" />
     ))}</div>;
   }
+  const selectedCategory = categories.find((category) => category.id === form.categoryId);
+  const atItemLimit =
+    tier === "standard" && (selectedCategory?._count?.items ?? 0) >= 15;
 
   return (
     <div className="space-y-4">
@@ -106,7 +112,8 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
         <Button
           size="sm"
           onClick={() => setShowForm(!showForm)}
-          disabled={categories.length === 0}
+          disabled={categories.length === 0 || atItemLimit}
+          title={atItemLimit ? "Standard plans are limited to 15 items per category" : undefined}
         >
           {showForm ? "Cancel" : "+ Add Item"}
         </Button>
@@ -115,6 +122,11 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
       {categories.length === 0 && (
         <p className="text-amber-600 text-sm bg-amber-50 p-3 rounded-lg">
           Create a category first before adding menu items.
+        </p>
+      )}
+      {atItemLimit && (
+        <p className="text-amber-800 text-sm bg-amber-50 border border-amber-200 p-3 rounded-lg">
+          This category has reached the Standard plan limit of 15 items. Upgrade to Elite or choose another category.
         </p>
       )}
 
@@ -160,7 +172,7 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
             value={form.imageUrl}
             onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
           />
-          <Button type="submit" size="sm">Add Item</Button>
+          <Button type="submit" size="sm" disabled={atItemLimit}>Add Item</Button>
         </form>
       )}
 

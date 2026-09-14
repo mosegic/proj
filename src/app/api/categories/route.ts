@@ -3,7 +3,7 @@ import db from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { categorySchema } from "@/lib/validations";
 import { jsonError, jsonSuccess, parseBody } from "@/lib/api-utils";
-import { canAddCategory, TIER_LIMITS } from "@/lib/tier-limits";
+import { canAddCategory, getRestaurantTier, TIER_LIMITS } from "@/lib/tier-limits";
 
 async function verifyRestaurantAccess(restaurantId: string, userId: string) {
   return db.restaurant.findFirst({
@@ -29,7 +29,8 @@ export async function GET(request: NextRequest) {
     orderBy: { sortOrder: "asc" },
   });
 
-  return jsonSuccess({ categories });
+  const tier = await getRestaurantTier(restaurantId);
+  return jsonSuccess({ categories, tier });
 }
 
 export async function POST(request: NextRequest) {

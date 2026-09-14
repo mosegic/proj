@@ -3,7 +3,7 @@ import db from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { menuItemSchema } from "@/lib/validations";
 import { jsonError, jsonSuccess, parseBody } from "@/lib/api-utils";
-import { canAddMenuItem, TIER_LIMITS } from "@/lib/tier-limits";
+import { canAddMenuItem, getRestaurantTier, TIER_LIMITS } from "@/lib/tier-limits";
 
 export async function GET(request: NextRequest) {
   const session = await getSession();
@@ -33,7 +33,8 @@ export async function GET(request: NextRequest) {
     orderBy: [{ category: { sortOrder: "asc" } }, { sortOrder: "asc" }],
   });
 
-  return jsonSuccess({ items });
+  const tier = await getRestaurantTier(restaurantId);
+  return jsonSuccess({ items, tier });
 }
 
 export async function POST(request: NextRequest) {
