@@ -25,7 +25,7 @@ export function LoginForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
-      router.push("/dashboard");
+      router.push("/dashboard/billing");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
