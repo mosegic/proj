@@ -34,6 +34,13 @@ export default function HomePage() {
           <Link href="/register">
             <Button size="lg">Start Free</Button>
           </Link>
+
+<Link href="/menu/demo-cafe">
+            <Button size="lg" variant="secondary">
+              Demo
+            </Button>
+          </Link>
+          
         </div>
 
         <section className="mt-24 text-left">
