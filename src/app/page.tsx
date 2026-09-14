@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   return (
@@ -10,13 +10,11 @@ export default function HomePage() {
             M
           </div>
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
-       
-        
         </div>
         <div className="flex gap-3">
-          <Link href="/login">
-            <Button variant="ghost">Sign In</Button>
-          </Link>
+          <Button variant="ghost" asChild>
+            <Link href="/login">Sign In</Link>
+          </Button>
         </div>
       </nav>
 
@@ -32,14 +30,12 @@ export default function HomePage() {
           Products and Services, Profit Focus, Scale.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-         <Link href="/register">
-            <Button size="lg">Start Free</Button>
-          </Link>
-          <Link href="/menu/demo-cafe">
-            <Button size="lg" variant="secondary">
-              Demo
-            </Button>
-          </Link>
+          <Button size="lg" asChild>
+            <Link href="/register">Start Free</Link>
+          </Button>
+          <Button size="lg" variant="secondary" asChild>
+            <Link href="/menu/demo-cafe">Demo</Link>
+          </Button>
         </div>
 
         <section className="mt-24 text-left">
@@ -56,10 +52,9 @@ export default function HomePage() {
                 <p className="mt-6 text-3xl font-extrabold text-gray-900">₦0</p>
               </div>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href="/register" className="flex-1">
-                  <Button className="w-full">Start Free</Button>
-                </Link>
-               
+                <Button className="w-full" asChild>
+                  <Link href="/register">Start Free</Link>
+                </Button>
               </div>
             </div>
 
@@ -69,9 +64,9 @@ export default function HomePage() {
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">₦15,000<span className="text-sm font-medium text-gray-500">/month</span></h3>
                 <p className="mt-2 text-sm text-gray-600">Essential tools for growing restaurants.</p>
               </div>
-              <Link href="/register" className="mt-8">
-                <Button className="w-full">Choose Standard</Button>
-              </Link>
+              <Button className="w-full mt-8" asChild>
+                <Link href="/register">Choose Standard</Link>
+              </Button>
             </div>
 
             <div className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -80,9 +75,9 @@ export default function HomePage() {
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">₦45,000<span className="text-sm font-medium text-gray-500">/month</span></h3>
                 <p className="mt-2 text-sm text-gray-600">Advanced tools for ambitious teams.</p>
               </div>
-              <Link href="/register" className="mt-8">
-                <Button className="w-full">Choose Elite</Button>
-              </Link>
+              <Button className="w-full mt-8" asChild>
+                <Link href="/register">Choose Elite</Link>
+              </Button>
             </div>
           </div>
         </section>
