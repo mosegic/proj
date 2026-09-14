@@ -32,17 +32,14 @@ export default function HomePage() {
           Products and Services, Profit Focus, Scale.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/register">
+         <Link href="/register">
             <Button size="lg">Start Free</Button>
           </Link>
           <Link href="/menu/demo-cafe">
-
-<Link href="/menu/demo-cafe">
             <Button size="lg" variant="secondary">
               Demo
             </Button>
           </Link>
-          
         </div>
 
         <section className="mt-24 text-left">
