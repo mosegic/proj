@@ -32,9 +32,34 @@ model Restaurant {
   tables      Table[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  subscription Subscription?
 
   @@index([ownerId])
   @@index([slug])
+}
+
+model Subscription {
+  id                   String     @id @default(cuid())
+  restaurantId         String     @unique
+  restaurant           Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  status               String     @default("pending")
+  tier                 String     @default("standard")
+  planCode             String
+  customerCode         String?
+  subscriptionCode     String?
+  transactionReference String?    @unique
+  authorizationCode    String?
+  email                String
+  currency             String     @default("NGN")
+  amount               Int?
+  nextPaymentDate      DateTime?
+  trialEndsAt          DateTime?
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  @@index([status])
+  @@index([customerCode])
+  @@index([subscriptionCode])
 }
 
 model Category {
@@ -46,6 +71,7 @@ model Category {
   restaurantId String
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   items        MenuItem[]
+  translations CategoryTranslation[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
@@ -65,10 +91,35 @@ model MenuItem {
   categoryId   String
   category     Category         @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   options      MenuItemOption[]
+  translations MenuItemTranslation[]
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
 
   @@index([categoryId])
+}
+
+model CategoryTranslation {
+  id          String   @id @default(cuid())
+  categoryId  String
+  languageCode String
+  name        String
+  description String?
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, languageCode])
+  @@index([languageCode])
+}
+
+model MenuItemTranslation {
+  id           String   @id @default(cuid())
+  menuItemId   String
+  languageCode String
+  name         String
+  description  String?
+  menuItem     MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, languageCode])
+  @@index([languageCode])
 }
 
 model MenuItemOption {

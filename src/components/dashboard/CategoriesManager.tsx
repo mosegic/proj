@@ -15,6 +15,7 @@ interface Category {
 
 export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [tier, setTier] = useState<"standard" | "elite">("standard");
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ name: "", description: "" });
@@ -24,6 +25,7 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
     const res = await fetch(`/api/categories?restaurantId=${restaurantId}`);
     const data = await res.json();
     setCategories(data.categories || []);
+    setTier(data.tier === "elite" ? "elite" : "standard");
     setLoading(false);
   }
 
@@ -73,15 +75,26 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
       <div key={i} className="h-16 bg-gray-100 rounded-lg" />
     ))}</div>;
   }
+  const atCategoryLimit = tier === "standard" && categories.length >= 5;
 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold">Categories</h2>
-        <Button size="sm" onClick={() => setShowForm(!showForm)}>
+        <Button
+          size="sm"
+          onClick={() => setShowForm(!showForm)}
+          disabled={atCategoryLimit}
+          title={atCategoryLimit ? "Standard plans are limited to 5 categories" : undefined}
+        >
           {showForm ? "Cancel" : "+ Add Category"}
         </Button>
       </div>
+      {atCategoryLimit && (
+        <p className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+          You have reached the Standard plan limit of 5 categories. Upgrade to Elite to add more.
+        </p>
+      )}
 
       {showForm && (
         <form onSubmit={handleCreate} className="bg-gray-50 rounded-lg p-4 space-y-3">

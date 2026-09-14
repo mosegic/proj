@@ -10,12 +10,13 @@ export default function HomePage() {
             M
           </div>
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
+       
+        
         </div>
         <div className="flex gap-3">
           <Link href="/login">
             <Button variant="ghost">Sign In</Button>
           </Link>
-
         </div>
       </nav>
 
@@ -26,7 +27,7 @@ export default function HomePage() {
           <span className="text-blue-600">Modern Restaurant</span>
         </h1>
         <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-          Create beautiful digitalmobile menu, manage your catalog in real-time,
+          Create beautiful digital mobile menus, manage your catalog in real-time,
           generate scannable QR codes per table — all from one dashboard.
           Products and Services, Profit Focus, Scale.
         </p>
@@ -36,10 +37,59 @@ export default function HomePage() {
           </Link>
           <Link href="/menu/demo-cafe">
             <Button size="lg" variant="secondary">
-              View Demo Menu
+              Demo
             </Button>
           </Link>
         </div>
+
+        <section className="mt-24 text-left">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900">Simple pricing for every restaurant</h2>
+            <p className="mt-3 text-gray-600">Start free, then upgrade when your business grows.</p>
+          </div>
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            <div className="flex flex-col rounded-2xl border-2 border-blue-600 bg-white p-6 shadow-sm">
+              <div className="flex-1">
+                <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Free Tier</p>
+                <h3 className="mt-2 text-2xl font-bold text-gray-900">Free</h3>
+                <p className="mt-2 text-sm text-gray-600">Try MenuSaaS free for 30 days.</p>
+                <p className="mt-6 text-3xl font-extrabold text-gray-900">₦0</p>
+              </div>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link href="/register" className="flex-1">
+                  <Button className="w-full">Start Free</Button>
+                </Link>
+                <Link href="/menu/demo-cafe" className="flex-1">
+                  <Button size="lg" variant="secondary" className="w-full">
+                    Demo
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="flex-1">
+                <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Business Standard</p>
+                <h3 className="mt-2 text-2xl font-bold text-gray-900">₦15,000<span className="text-sm font-medium text-gray-500">/month</span></h3>
+                <p className="mt-2 text-sm text-gray-600">Essential tools for growing restaurants.</p>
+              </div>
+              <Link href="/register" className="mt-8">
+                <Button className="w-full">Choose Standard</Button>
+              </Link>
+            </div>
+
+            <div className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="flex-1">
+                <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Business Elite</p>
+                <h3 className="mt-2 text-2xl font-bold text-gray-900">₦45,000<span className="text-sm font-medium text-gray-500">/month</span></h3>
+                <p className="mt-2 text-sm text-gray-600">Advanced tools for ambitious teams.</p>
+              </div>
+              <Link href="/register" className="mt-8">
+                <Button className="w-full">Choose Elite</Button>
+              </Link>
+            </div>
+          </div>
+        </section>
 
         <div className="mt-24 grid sm:grid-cols-3 gap-8 text-left">
           {[

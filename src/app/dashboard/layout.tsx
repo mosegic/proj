@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { getUserRestaurants } from "@/lib/tenant";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
-import Link from "next/link";
+import { SubscriptionGate } from "@/components/dashboard/SubscriptionGate";
 
 export default async function DashboardLayout({
   children,
@@ -21,7 +21,9 @@ export default async function DashboardLayout({
     <div className="min-h-screen bg-gray-50">
       <DashboardNav restaurant={restaurant} />
       <main className="lg:pl-64 pb-20 lg:pb-8">
-        <div className="max-w-4xl mx-auto px-4 py-6">{children}</div>
+        <SubscriptionGate>
+          <div className="max-w-4xl mx-auto px-4 py-6">{children}</div>
+        </SubscriptionGate>
       </main>
     </div>
   );

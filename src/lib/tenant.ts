@@ -20,7 +20,7 @@ export async function getUserRestaurants() {
   });
 }
 
-export async function getRestaurantBySlug(slug: string) {
+export async function getRestaurantBySlug(slug: string, languageCode?: string) {
   return db.restaurant.findUnique({
     where: { slug, isActive: true },
     include: {
@@ -28,10 +28,18 @@ export async function getRestaurantBySlug(slug: string) {
         where: { isVisible: true },
         orderBy: { sortOrder: "asc" },
         include: {
+          translations: languageCode
+            ? { where: { languageCode } }
+            : undefined,
           items: {
             where: { isVisible: true },
             orderBy: { sortOrder: "asc" },
-            include: { options: true },
+            include: {
+              options: true,
+              translations: languageCode
+                ? { where: { languageCode } }
+                : undefined,
+            },
           },
         },
       },
