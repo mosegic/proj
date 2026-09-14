@@ -59,11 +59,7 @@ export default function HomePage() {
                 <Link href="/register" className="flex-1">
                   <Button className="w-full">Start Free</Button>
                 </Link>
-                <Link href="/menu/demo-cafe" className="flex-1">
-                  <Button size="lg" variant="secondary" className="w-full">
-                    Demo
-                  </Button>
-                </Link>
+               
               </div>
             </div>
 
