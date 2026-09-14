@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
 type Subscription = {
@@ -16,6 +16,7 @@ type Subscription = {
 type BillingInterval = "monthly" | "annually";
 
 export default function BillingPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
