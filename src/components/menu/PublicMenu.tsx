@@ -9,6 +9,7 @@ interface MenuItem {
   isSoldOut: boolean;
   isAvailable: boolean;
   options: { id: string; name: string; priceDelta: MonetaryValue }[];
+  translations?: { name: string; description: string | null }[];
 }
 
 interface Category {
@@ -16,6 +17,7 @@ interface Category {
   name: string;
   description: string | null;
   items: MenuItem[];
+  translations?: { name: string; description: string | null }[];
 }
 
 interface Restaurant {
@@ -81,19 +83,25 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
   {restaurant.categories.length === 0 ? (
     <p className="text-center text-gray-500 py-12">Menu coming soon...</p>
   ) : (
-    restaurant.categories.map((category) => (
+    restaurant.categories.map((category) => {
+      const categoryTranslation = category.translations?.[0];
+      return (
       <section key={category.id}>
         <h2
           className="text-lg font-bold mb-1 sticky top-[88px] bg-gray-50 py-2"
           style={{ color: theme }}
         >
-          {category.name}
+          {categoryTranslation?.name || category.name}
         </h2>
-        {category.description && (
-          <p className="text-sm text-gray-500 mb-3">{category.description}</p>
+        {(categoryTranslation?.description || category.description) && (
+          <p className="text-sm text-gray-500 mb-3">
+            {categoryTranslation?.description || category.description}
+          </p>
         )}
         <div className="space-y-3">
-          {category.items.map((item) => (
+          {category.items.map((item) => {
+            const itemTranslation = item.translations?.[0];
+            return (
             <article
               key={item.id}
               className={`bg-white rounded-xl shadow-sm overflow-hidden ${
@@ -103,7 +111,9 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
               <div className="p-4 flex flex-col gap-3">
                 {/* Top Section: Title & Price */}
                 <div className="flex justify-between items-start gap-4">
-                  <h3 className="font-semibold text-gray-900 text-base">{item.name}</h3>
+                  <h3 className="font-semibold text-gray-900 text-base">
+                    {itemTranslation?.name || item.name}
+                  </h3>
                   <span
                     className="font-bold text-base whitespace-nowrap"
                     style={{ color: theme }}
@@ -113,9 +123,9 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
                 </div>
 
                 {/* Middle Section: Description */}
-                {item.description && (
+                {(itemTranslation?.description || item.description) && (
                   <p className="text-sm text-gray-600 line-clamp-3">
-                    {item.description}
+                    {itemTranslation?.description || item.description}
                   </p>
                 )}
 
@@ -161,10 +171,12 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
                 </div>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </section>
-    ))
+      );
+    })
   )}
 </main>
 

@@ -4,11 +4,13 @@ import { PublicMenu } from "@/components/menu/PublicMenu";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ lang?: string }>;
 };
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params, searchParams }: PageProps) {
   const { slug } = await params;
-  const restaurant = await getRestaurantBySlug(slug);
+  const { lang } = await searchParams;
+  const restaurant = await getRestaurantBySlug(slug, lang);
   if (!restaurant) return { title: "Menu Not Found" };
   return {
     title: `${restaurant.name} — Menu`,
@@ -16,9 +18,10 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default async function PublicMenuPage({ params }: PageProps) {
+export default async function PublicMenuPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
-  const restaurant = await getRestaurantBySlug(slug);
+  const { lang } = await searchParams;
+  const restaurant = await getRestaurantBySlug(slug, lang);
   if (!restaurant) notFound();
 
   return <PublicMenu restaurant={restaurant} />;

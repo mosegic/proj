@@ -71,6 +71,7 @@ model Category {
   restaurantId String
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   items        MenuItem[]
+  translations CategoryTranslation[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
@@ -90,10 +91,35 @@ model MenuItem {
   categoryId   String
   category     Category         @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   options      MenuItemOption[]
+  translations MenuItemTranslation[]
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
 
   @@index([categoryId])
+}
+
+model CategoryTranslation {
+  id          String   @id @default(cuid())
+  categoryId  String
+  languageCode String
+  name        String
+  description String?
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, languageCode])
+  @@index([languageCode])
+}
+
+model MenuItemTranslation {
+  id           String   @id @default(cuid())
+  menuItemId   String
+  languageCode String
+  name         String
+  description  String?
+  menuItem     MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuItemId, languageCode])
+  @@index([languageCode])
 }
 
 model MenuItemOption {
