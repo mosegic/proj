@@ -3,10 +3,11 @@ import db from "@/lib/db";
 import { jsonError, jsonSuccess } from "@/lib/api-utils";
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  const languageCode = request.nextUrl.searchParams.get("lang")?.trim().toLowerCase();
 
   const restaurant = await db.restaurant.findUnique({
     where: { slug, isActive: true },
@@ -15,10 +16,18 @@ export async function GET(
         where: { isVisible: true },
         orderBy: { sortOrder: "asc" },
         include: {
+          translations: languageCode
+            ? { where: { languageCode } }
+            : undefined,
           items: {
             where: { isVisible: true },
             orderBy: { sortOrder: "asc" },
-            include: { options: true },
+            include: {
+              options: true,
+              translations: languageCode
+                ? { where: { languageCode } }
+                : undefined,
+            },
           },
         },
       },

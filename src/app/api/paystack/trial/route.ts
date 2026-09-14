@@ -23,6 +23,7 @@ export async function POST() {
     data: {
       restaurantId: restaurant.id,
       status: "trialing",
+      tier: "standard",
       planCode: "free",
       email: session.email,
       trialEndsAt,

@@ -34,6 +34,7 @@ export default function HomePage() {
           <Link href="/register">
             <Button size="lg">Start Free</Button>
           </Link>
+          <Link href="/menu/demo-cafe">
 
 <Link href="/menu/demo-cafe">
             <Button size="lg" variant="secondary">

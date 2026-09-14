@@ -9,6 +9,7 @@ Multi-tenant SaaS platform for restaurants to manage digital menus, catalog data
 - **Public mobile menu** — Lightweight, mobile-first menu pages for customers
 - **QR code generation** — Branded PNG/SVG QR codes linking to table-specific menu URLs
 - **Subscriptions** — One-month free trial, Business Standard, and Business Elite plans
+- **Elite translations** — Native category and menu-item translations for multilingual public menus
 
 ## Tech Stack
 
@@ -118,3 +119,8 @@ Open [http://localhost:3000](http://localhost:3000).
 - `POST /api/paystack/initialize` — Start a Paystack subscription checkout
 - `GET /api/paystack/verify/[reference]` — Verify a completed payment
 - `POST /api/paystack/webhook` — Process signed Paystack subscription events
+- `POST /api/translations` — Create or update an Elite-only category or menu-item translation
+
+Public menus accept an optional language query parameter, for example
+`/menu/demo-cafe?lang=fr` or `/menu/demo-cafe/table/1?lang=sw`. If a translation is
+not available, the original menu text is displayed.

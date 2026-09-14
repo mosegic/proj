@@ -3,6 +3,7 @@ import db from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { categorySchema } from "@/lib/validations";
 import { jsonError, jsonSuccess, parseBody } from "@/lib/api-utils";
+import { canAddCategory, getRestaurantTier, TIER_LIMITS } from "@/lib/tier-limits";
 
 async function verifyRestaurantAccess(restaurantId: string, userId: string) {
   return db.restaurant.findFirst({
@@ -28,7 +29,8 @@ export async function GET(request: NextRequest) {
     orderBy: { sortOrder: "asc" },
   });
 
-  return jsonSuccess({ categories });
+  const tier = await getRestaurantTier(restaurantId);
+  return jsonSuccess({ categories, tier });
 }
 
 export async function POST(request: NextRequest) {
@@ -44,6 +46,14 @@ export async function POST(request: NextRequest) {
   const parsed = categorySchema.safeParse(body);
   if (!parsed.success) {
     return jsonError(parsed.error.issues[0]?.message || "Validation failed");
+  }
+
+  const categoryLimit = await canAddCategory(body.restaurantId);
+  if (!categoryLimit.allowed) {
+    return jsonError(
+      `Standard plan is limited to ${TIER_LIMITS.standard.maxCategories} categories. Upgrade to Business Elite to add more.`,
+      403,
+    );
   }
 
   const maxOrder = await db.category.aggregate({
