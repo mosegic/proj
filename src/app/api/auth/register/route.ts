@@ -41,23 +41,46 @@ export async function POST(request: NextRequest) {
 
   const passwordHash = await hashPassword(password);
 
-  const user = await db.user.create({
-    data: {
-      name,
-      email,
-      passwordHash,
-      restaurants: {
-        create: {
-          name: businessName,
-          slug,
-          description: description || null,
-          themeColor: themeColor || "#2563eb",
-          accentColor: accentColor || "#1e40af",
-          logoUrl: logoUrl || null,
+  const trialEndsAt = new Date();
+  trialEndsAt.setMonth(trialEndsAt.getMonth() + 1);
+
+  const user = await db.$transaction(async (tx) => {
+    const createdUser = await tx.user.create({
+      data: {
+        name,
+        email,
+        passwordHash,
+        restaurants: {
+          create: {
+            name: businessName,
+            slug,
+            description: description || null,
+            themeColor: themeColor || "#2563eb",
+            accentColor: accentColor || "#1e40af",
+            logoUrl: logoUrl || null,
+          },
         },
       },
-    },
-    include: { restaurants: true },
+      include: { restaurants: true },
+    });
+
+    const restaurant = createdUser.restaurants[0];
+    if (!restaurant) {
+      throw new Error("Restaurant creation failed");
+    }
+
+    await tx.subscription.create({
+      data: {
+        restaurantId: restaurant.id,
+        status: "trialing",
+        tier: "standard",
+        planCode: "free",
+        email: createdUser.email,
+        trialEndsAt,
+      },
+    });
+
+    return createdUser;
   });
 
   const token = await createSession({
