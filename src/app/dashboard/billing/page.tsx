@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
 type Subscription = {
   status: string;
+  tier: string;
   planCode: string;
   trialEndsAt: string | null;
   nextPaymentDate: string | null;
@@ -16,7 +17,6 @@ type Subscription = {
 type BillingInterval = "monthly" | "annually";
 
 export default function BillingPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
@@ -80,6 +80,7 @@ export default function BillingPage() {
   if (loading) return <div className="animate-pulse h-40 rounded-lg bg-gray-100" />;
   const active = subscription?.status === "active";
   const trialing = subscription?.status === "trialing";
+  const standardActive = active && subscription?.tier === "standard";
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 py-6">
@@ -102,7 +103,7 @@ export default function BillingPage() {
         </p>
         <p className="mt-1 text-2xl font-bold text-gray-900">
           {active
-            ? `${subscription?.planCode === "elite" ? "Business Elite" : "Business Standard"}`
+            ? `${subscription?.tier === "elite" ? "Business Elite" : "Business Standard"}`
             : trialing
               ? "Free Trial"
               : "No Active Subscription"}
@@ -122,7 +123,7 @@ export default function BillingPage() {
         )}
       </section>
 
-      {!active && (
+      {(!active || standardActive) && (
         <div className="space-y-8">
           <div className="flex flex-col items-center justify-center space-y-3">
             <div className="inline-flex rounded-lg bg-gray-100 p-1 border border-gray-200">
@@ -165,7 +166,8 @@ export default function BillingPage() {
                 "QR code generation",
                 "Standard analytic insights",
               ]}
-              disabled={starting}
+              disabled={starting || standardActive}
+              buttonLabel={standardActive ? "Current plan" : undefined}
               onChoose={() => subscribe("standard", billingInterval)}
             />
             <PlanCard
@@ -181,6 +183,7 @@ export default function BillingPage() {
               ]}
               highlighted
               disabled={starting}
+              buttonLabel={standardActive ? "Upgrade to Elite" : undefined}
               onChoose={() => subscribe("elite", billingInterval)}
             />
           </div>
@@ -211,6 +214,7 @@ function PlanCard({
   features,
   highlighted = false,
   disabled,
+  buttonLabel,
   onChoose,
 }: {
   name: string;
@@ -220,6 +224,7 @@ function PlanCard({
   features: string[];
   highlighted?: boolean;
   disabled: boolean;
+  buttonLabel?: string;
   onChoose: () => void;
 }) {
   return (
@@ -258,7 +263,7 @@ function PlanCard({
         disabled={disabled}
         onClick={onChoose}
       >
-        Choose {name.replace("Business ", "")}
+        {buttonLabel || `Choose ${name.replace("Business ", "")}`}
       </Button>
     </div>
   );

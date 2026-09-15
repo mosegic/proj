@@ -23,10 +23,6 @@ export async function POST(request: Request) {
   }
 
   const existing = await db.subscription.findUnique({ where: { restaurantId: restaurant.id } });
-  if (existing?.status === "active") {
-    return NextResponse.json({ error: "Subscription is already active" }, { status: 409 });
-  }
-
   const body = (await request.json().catch(() => ({}))) as {
     plan?: PaidPlan;
     interval?: BillingInterval;
@@ -36,6 +32,15 @@ export async function POST(request: Request) {
   }
   if (body.interval !== "monthly" && body.interval !== "annually") {
     return NextResponse.json({ error: "Choose a valid billing interval" }, { status: 400 });
+  }
+  if (existing?.status === "active" && existing.tier === body.plan) {
+    return NextResponse.json({ error: "Subscription is already active" }, { status: 409 });
+  }
+  if (existing?.status === "active" && existing.tier === "elite") {
+    return NextResponse.json({ error: "Subscription is already on the Elite plan" }, { status: 409 });
+  }
+  if (existing?.status === "active" && existing.tier !== "standard") {
+    return NextResponse.json({ error: "This subscription cannot be upgraded here" }, { status: 409 });
   }
 
   const reference = `menu_${restaurant.id}_${Date.now()}`;
