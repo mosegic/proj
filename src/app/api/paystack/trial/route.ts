@@ -6,6 +6,14 @@ export async function POST() {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  const user = await db.user.findUnique({
+    where: { id: session.userId },
+    select: { isDemo: true },
+  });
+  if (user?.isDemo) {
+    return NextResponse.json({ error: "Demo accounts do not use subscription billing" }, { status: 403 });
+  }
+
   const restaurant = await db.restaurant.findFirst({
     where: { ownerId: session.userId },
     orderBy: { createdAt: "desc" },

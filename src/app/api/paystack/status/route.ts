@@ -11,5 +11,9 @@ export async function GET() {
     include: { subscription: true },
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
-  return NextResponse.json({ subscription: restaurant.subscription });
+  const user = await db.user.findUnique({
+    where: { id: session.userId },
+    select: { isDemo: true },
+  });
+  return NextResponse.json({ subscription: restaurant.subscription, isDemo: user?.isDemo === true });
 }

@@ -20,7 +20,11 @@ export function SubscriptionGate({ children }: { children: React.ReactNode }) {
         if (!response.ok) throw new Error("Unable to check subscription");
         return response.json();
       })
-      .then(({ subscription }) => {
+      .then(({ subscription, isDemo }) => {
+        if (isDemo) {
+          if (!cancelled) setChecking(false);
+          return;
+        }
         if (!cancelled && subscription?.status !== "active" && subscription?.status !== "trialing") {
           router.replace("/dashboard/billing");
           return;

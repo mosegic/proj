@@ -11,11 +11,12 @@ async function main() {
 
   const user = await db.user.upsert({
     where: { email: "demo@menusaas.com" },
-    update: {},
+    update: { isDemo: true },
     create: {
       name: "Demo Owner",
       email: "demo@menusaas.com",
       passwordHash,
+      isDemo: true,
       restaurants: {
         create: {
           name: "Demo Cafe",

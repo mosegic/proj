@@ -28,10 +28,19 @@ export async function POST(request: NextRequest) {
     return jsonError("Invalid email or password", 401);
   }
 
+  const isDemo = user.isDemo || user.email === "demo@menusaas.com";
+  if (isDemo && !user.isDemo) {
+    await db.user.update({
+      where: { id: user.id },
+      data: { isDemo: true },
+    });
+  }
+
   const token = await createSession({
     userId: user.id,
     email: user.email,
     name: user.name,
+    isDemo,
   });
   await setSessionCookie(token);
 

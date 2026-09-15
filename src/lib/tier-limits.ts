@@ -11,11 +11,17 @@ export const TIER_LIMITS: Record<
 };
 
 export async function getRestaurantTier(restaurantId: string): Promise<SubscriptionTier> {
-  const subscription = await db.subscription.findUnique({
-    where: { restaurantId },
-    select: { status: true, tier: true },
+  const restaurant = await db.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: {
+      owner: { select: { isDemo: true } },
+      subscription: { select: { status: true, tier: true } },
+    },
   });
 
+  if (restaurant?.owner.isDemo) return "elite";
+
+  const subscription = restaurant?.subscription;
   if (
     (subscription?.status === "active" || subscription?.status === "trialing") &&
     subscription.tier === "elite"

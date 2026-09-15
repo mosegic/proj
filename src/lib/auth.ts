@@ -13,6 +13,7 @@ export interface SessionPayload {
   userId: string;
   email: string;
   name: string;
+  isDemo?: boolean;
 }
 
 export async function hashPassword(password: string): Promise<string> {
