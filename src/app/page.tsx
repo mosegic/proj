@@ -13,11 +13,11 @@ export default function HomePage() {
        
         
         </div>
-     <div className="flex gap-3"> <Link href="/login"> <Button variant="ghost">Sign In</Button> </Link> </div>
-
-
-
-        
+        <div className="flex gap-3">
+          <Link href="/login">
+            <Button variant="ghost">Sign In</Button>
+          </Link>
+        </div>
       </nav>
 
       <main className="max-w-6xl mx-auto px-4 py-20 text-center">
@@ -27,21 +27,18 @@ export default function HomePage() {
           <span className="text-blue-600">Modern Restaurant</span>
         </h1>
         <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-          All from one dashboard.
-          Products and Services, Profit Focus, Scale.
+          Create beautiful digital mobile menus, manage your catalog in real-time,
+          generate scannable QR codes per table — all from one dashboard.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/register">
             <Button size="lg">Start Free</Button>
           </Link>
           <Link href="/menu/demo-cafe">
-
-<Link href="/menu/demo-cafe">
             <Button size="lg" variant="secondary">
               Demo
             </Button>
           </Link>
-          
         </div>
 
         <section className="mt-24 text-left">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { slugify } from "@/lib/validations";
@@ -15,7 +14,6 @@ const THEME_PRESETS = [
 ];
 
 export function RegisterForm() {
-  const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -54,7 +52,7 @@ export function RegisterForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Registration failed");
-      router.push("/dashboard/billing");
+      window.location.assign("/dashboard/billing");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {
