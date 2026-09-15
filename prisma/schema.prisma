@@ -51,7 +51,7 @@ model Subscription {
   transactionReference String?    @unique
   authorizationCode    String?
   email                String
-  currency             String     @default("NGN")
+  currency               String     @default("KES")
   amount               Int?
   nextPaymentDate      DateTime?
   trialEndsAt          DateTime?

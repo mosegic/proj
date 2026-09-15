@@ -49,12 +49,12 @@ const paidPlanDefaults: Record<
   Record<BillingInterval, { amount: number; envKey: string }>
 > = {
   standard: {
-    monthly: { amount: 1500000, envKey: "PAYSTACK_STANDARD_MONTHLY_PLAN_CODE" },
-    annually: { amount: 15000000, envKey: "PAYSTACK_STANDARD_ANNUAL_PLAN_CODE" },
+    monthly: { amount: 150000, envKey: "PAYSTACK_STANDARD_MONTHLY_PLAN_CODE" },
+    annually: { amount: 1500000, envKey: "PAYSTACK_STANDARD_ANNUAL_PLAN_CODE" },
   },
   elite: {
-    monthly: { amount: 4500000, envKey: "PAYSTACK_ELITE_MONTHLY_PLAN_CODE" },
-    annually: { amount: 45000000, envKey: "PAYSTACK_ELITE_ANNUAL_PLAN_CODE" },
+    monthly: { amount: 350000, envKey: "PAYSTACK_ELITE_MONTHLY_PLAN_CODE" },
+    annually: { amount: 3500000, envKey: "PAYSTACK_ELITE_ANNUAL_PLAN_CODE" },
   },
 };
 
@@ -66,12 +66,12 @@ export function getPaystackPlanCode(plan: PaidPlan, interval: BillingInterval) {
 
 export function getPaystackAmount(plan: PaidPlan, interval: BillingInterval) {
   const amount = Number.parseInt(
-    process.env[`PAYSTACK_${plan.toUpperCase()}_${interval.toUpperCase()}_AMOUNT_KOBO`] ||
+    process.env[`PAYSTACK_${plan.toUpperCase()}_${interval.toUpperCase()}_AMOUNT_CENTS`] ||
       String(paidPlanDefaults[plan][interval].amount),
     10,
   );
   if (!Number.isSafeInteger(amount) || amount <= 0) {
-    throw new Error("PAYSTACK_AMOUNT_KOBO must be a positive integer");
+    throw new Error("PAYSTACK_AMOUNT_CENTS must be a positive integer");
   }
   return amount;
 }
@@ -84,6 +84,7 @@ export function initializePaystackTransaction(payload: {
   email: string;
   reference: string;
   amount: number;
+  currency: "KES";
   plan: string;
   callback_url: string;
   metadata: { restaurantId: string };

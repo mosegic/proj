@@ -54,10 +54,10 @@ PAYSTACK_STANDARD_MONTHLY_PLAN_CODE="PLN_..."
 PAYSTACK_STANDARD_ANNUAL_PLAN_CODE="PLN_..."
 PAYSTACK_ELITE_MONTHLY_PLAN_CODE="PLN_..."
 PAYSTACK_ELITE_ANNUAL_PLAN_CODE="PLN_..."
-PAYSTACK_STANDARD_MONTHLY_AMOUNT_KOBO="1500000"
-PAYSTACK_STANDARD_ANNUAL_AMOUNT_KOBO="15000000"
-PAYSTACK_ELITE_MONTHLY_AMOUNT_KOBO="4500000"
-PAYSTACK_ELITE_ANNUAL_AMOUNT_KOBO="45000000"
+PAYSTACK_STANDARD_MONTHLY_AMOUNT_CENTS="150000"
+PAYSTACK_STANDARD_ANNUAL_AMOUNT_CENTS="1500000"
+PAYSTACK_ELITE_MONTHLY_AMOUNT_CENTS="350000"
+PAYSTACK_ELITE_ANNUAL_AMOUNT_CENTS="3500000"
 ```
 
 Subscription pricing is configured as:
@@ -65,10 +65,10 @@ Subscription pricing is configured as:
 | Plan | Price |
 |------|-------|
 | Free | 1 month trial |
-| Business Standard | ₦15,000/month |
-| Business Elite | ₦45,000/month |
-| Business Standard | ₦150,000/year |
-| Business Elite | ₦450,000/year |
+| Business Standard | KES 1,500/month |
+| Business Elite | KES 3,500/month |
+| Business Standard | KES 15,000/year |
+| Business Elite | KES 35,000/year |
 
 ### 2. Set up the database
 

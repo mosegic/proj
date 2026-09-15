@@ -81,7 +81,7 @@ export default function HomePage() {
               <div className="flex-1">
                 <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Free Tier</p>
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">Free</h3>
-                <p className="mt-1 text-3xl font-extrabold text-gray-900">₦0</p>
+                <p className="mt-1 text-3xl font-extrabold text-gray-900">KES 0</p>
                 <p className="mt-4 text-sm text-gray-600">Try MenuSaaS free for 30 days.</p>
               </div>
               <div className="mt-8">
@@ -97,7 +97,7 @@ export default function HomePage() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Business Standard</p>
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">Standard</h3>
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">
-                  ₦15,000<span className="text-sm font-medium text-gray-500">/mo</span>
+                  KES 1,500<span className="text-sm font-medium text-gray-500">/mo</span>
                 </p>
                 <p className="mt-4 text-sm text-gray-600">Essential tools for growing restaurants.</p>
               </div>
@@ -114,7 +114,7 @@ export default function HomePage() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Business Elite</p>
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">Elite</h3>
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">
-                  ₦45,000<span className="text-sm font-medium text-gray-500">/mo</span>
+                  KES 3,500<span className="text-sm font-medium text-gray-500">/mo</span>
                 </p>
                 <p className="mt-4 text-sm text-gray-600">Advanced tools for ambitious teams.</p>
               </div>

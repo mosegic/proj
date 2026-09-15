@@ -59,6 +59,7 @@ export async function POST(request: Request) {
       email: session.email,
       reference,
       amount,
+      currency: "KES",
       plan: planCode,
       callback_url: getPaystackCallbackUrl(),
       metadata: { restaurantId: restaurant.id },
