@@ -3,6 +3,7 @@ import db from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { tableSchema } from "@/lib/validations";
 import { jsonError, jsonSuccess, parseBody } from "@/lib/api-utils";
+import { getRestaurantTier } from "@/lib/tier-limits";
 
 export async function GET(request: NextRequest) {
   const session = await getSession();
@@ -21,7 +22,12 @@ export async function GET(request: NextRequest) {
     orderBy: { tableNumber: "asc" },
   });
 
-  return jsonSuccess({ tables, slug: restaurant.slug });
+  return jsonSuccess({
+    tables,
+    slug: restaurant.slug,
+    tier: await getRestaurantTier(restaurant.id),
+    hasLogo: Boolean(restaurant.logoUrl),
+  });
 }
 
 export async function POST(request: NextRequest) {

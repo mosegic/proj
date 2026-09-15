@@ -13,6 +13,8 @@ interface Table {
 export function TablesManager({ restaurantId }: { restaurantId: string }) {
   const [tables, setTables] = useState<Table[]>([]);
   const [slug, setSlug] = useState("");
+  const [tier, setTier] = useState<"standard" | "elite">("standard");
+  const [hasLogo, setHasLogo] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ label: "", tableNumber: "" });
@@ -22,6 +24,8 @@ export function TablesManager({ restaurantId }: { restaurantId: string }) {
     const data = await res.json();
     setTables(data.tables || []);
     setSlug(data.slug || "");
+    setTier(data.tier === "elite" ? "elite" : "standard");
+    setHasLogo(data.hasLogo === true);
     setLoading(false);
   }
 
@@ -125,7 +129,21 @@ export function TablesManager({ restaurantId }: { restaurantId: string }) {
                 >
                   Download SVG
                 </a>
+                {tier === "elite" && hasLogo && (
+                  <a
+                    href={`/api/qr/${table.id}?format=svg&branded=elite`}
+                    download={`elite-qr-table-${table.tableNumber}.svg`}
+                    className="text-xs font-semibold text-blue-600 hover:underline"
+                  >
+                    Download Elite QR
+                  </a>
+                )}
               </div>
+              {tier === "elite" && !hasLogo && (
+                <p className="text-xs text-amber-700">
+                  Add a restaurant logo in Settings to enable Elite branded QR codes.
+                </p>
+              )}
               <Button size="sm" variant="danger" onClick={() => handleDelete(table.id)}>
                 Delete
               </Button>
