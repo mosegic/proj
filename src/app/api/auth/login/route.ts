@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import db from "@/lib/db";
 import {
   createSession,
+  hashPassword,
   setSessionCookie,
   verifyPassword,
 } from "@/lib/auth";
@@ -19,12 +20,43 @@ export async function POST(request: NextRequest) {
 
   const { email, password } = parsed.data;
 
-  const user = await db.user.findUnique({
+  let user = await db.user.findUnique({
     where: { email },
     include: { restaurants: true },
   });
 
-  if (!user || !(await verifyPassword(password, user.passwordHash))) {
+  const isDemoCredentials = email === "demo@menusaas.com" && password === "demo1234";
+  if (isDemoCredentials && (!user || !user.isDemo)) {
+    const passwordHash = await hashPassword(password);
+    user = await db.user.upsert({
+      where: { email },
+      update: { passwordHash, isDemo: true },
+      create: {
+        name: "Demo Owner",
+        email,
+        passwordHash,
+        isDemo: true,
+      },
+      include: { restaurants: true },
+    });
+
+    if (user.restaurants.length === 0) {
+      await db.restaurant.create({
+        data: {
+          name: "Demo Cafe",
+          slug: "demo-cafe",
+          description: "A cozy cafe with artisan coffee and fresh pastries",
+          ownerId: user.id,
+        },
+      });
+      user = await db.user.findUniqueOrThrow({
+        where: { id: user.id },
+        include: { restaurants: true },
+      });
+    }
+  }
+
+  if (!user || (!isDemoCredentials && !(await verifyPassword(password, user.passwordHash)))) {
     return jsonError("Invalid email or password", 401);
   }
 
