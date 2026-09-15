@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button"; // Standard shadcn path lowercase mapping
+import { Button } from "@/components/ui/Button";
 
 export default function HomePage() {
   return (
@@ -103,7 +103,7 @@ export default function HomePage() {
               </div>
               <div className="mt-8">
                 <Link href="/register">
-                  <Button variant="outline" className="w-full">Choose Standard</Button>
+                  <Button variant="secondary" className="w-full">Choose Standard</Button>
                 </Link>
               </div>
             </div>
@@ -120,7 +120,7 @@ export default function HomePage() {
               </div>
               <div className="mt-8">
                 <Link href="/register">
-                  <Button variant="outline" className="w-full">Choose Elite</Button>
+                  <Button variant="secondary" className="w-full">Choose Elite</Button>
                 </Link>
               </div>
             </div>
