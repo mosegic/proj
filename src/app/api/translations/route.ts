@@ -84,3 +84,37 @@ export async function POST(request: NextRequest) {
   });
   return jsonSuccess({ translation });
 }
+
+export async function GET(request: NextRequest) {
+  const session = await getSession();
+  if (!session) return jsonError("Unauthorized", 401);
+
+  const categoryId = request.nextUrl.searchParams.get("categoryId");
+  const menuItemId = request.nextUrl.searchParams.get("menuItemId");
+  if ((!categoryId && !menuItemId) || (categoryId && menuItemId)) {
+    return jsonError("Provide one menu resource");
+  }
+
+  const resource = categoryId
+    ? await db.category.findUnique({
+        where: { id: categoryId },
+        include: { restaurant: true, translations: true },
+      })
+    : await db.menuItem.findUnique({
+        where: { id: menuItemId! },
+        include: { category: { include: { restaurant: true } }, translations: true },
+      });
+  if (!resource) return jsonError("Menu resource not found", 404);
+
+  const restaurant = "restaurant" in resource
+    ? resource.restaurant
+    : resource.category.restaurant;
+  if (restaurant.ownerId !== session.userId) {
+    return jsonError("Menu resource not found", 404);
+  }
+  if ((await getRestaurantTier(restaurant.id)) !== "elite") {
+    return jsonError("Multi-language translations are available on the Elite plan", 403);
+  }
+
+  return jsonSuccess({ translations: resource.translations });
+}

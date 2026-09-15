@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { TranslationEditor } from "@/components/dashboard/TranslationEditor";
 
 interface Category {
   id: string;
@@ -146,6 +147,11 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
                     <p className="text-xs text-gray-500">
                       {cat._count.items} items · {cat.isVisible ? "Visible" : "Hidden"}
                     </p>
+                    <TranslationEditor
+                      resourceId={cat.id}
+                      resourceType="category"
+                      tier={tier}
+                    />
                   </>
                 )}
               </div>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { formatPrice } from "@/lib/validations";
+import { TranslationEditor } from "@/components/dashboard/TranslationEditor";
 
 interface MenuItem {
   id: string;
@@ -202,6 +203,11 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
                     {item.description && (
                       <p className="text-sm text-gray-600 mt-1 line-clamp-2">{item.description}</p>
                     )}
+                    <TranslationEditor
+                      resourceId={item.id}
+                      resourceType="menuItem"
+                      tier={tier}
+                    />
                   </div>
                   <input
                     type="number"
