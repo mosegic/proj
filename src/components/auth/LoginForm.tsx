@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { readJsonResponse, responseError } from "@/lib/client-api";
 
 export function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -21,8 +22,8 @@ export function LoginForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Login failed");
+      const data = await readJsonResponse(res);
+      if (!res.ok) throw new Error(responseError(data, "Login failed"));
       window.location.assign("/dashboard/billing");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { readJsonResponse, responseError } from "@/lib/client-api";
 import { slugify } from "@/lib/validations";
 
 const THEME_PRESETS = [
@@ -50,8 +51,8 @@ export function RegisterForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Registration failed");
+      const data = await readJsonResponse(res);
+      if (!res.ok) throw new Error(responseError(data, "Registration failed"));
       window.location.assign("/dashboard/billing");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");

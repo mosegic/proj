@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { readJsonResponse, responseError } from "@/lib/client-api";
 
 type Subscription = {
   status: string;
@@ -39,14 +40,14 @@ export default function BillingPage() {
     verify
       .then(async (response) => {
         if (reference && !response.ok) {
-          const data = await response.json();
-          throw new Error(data.error || "Unable to verify payment");
+          const data = await readJsonResponse<{ authorizationUrl?: string; error?: string }>(response);
+          throw new Error(responseError(data, "Unable to verify payment"));
         }
         return fetch("/api/paystack/status");
       })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unable to load billing status");
-        return response.json();
+        return readJsonResponse<BillingStatus>(response);
       })
       .then((data: BillingStatus) => {
         setSubscription(data.subscription);
@@ -64,9 +65,14 @@ export default function BillingPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ plan, interval }),
     });
-    const data = await response.json();
+    const data = await readJsonResponse(response);
     if (!response.ok) {
-      setError(data.error || "Unable to start subscription");
+      setError(responseError(data, "Unable to start subscription"));
+      setStarting(false);
+      return;
+    }
+    if (typeof data.authorizationUrl !== "string") {
+      setError("Paystack did not return a checkout URL");
       setStarting(false);
       return;
     }
@@ -78,8 +84,8 @@ export default function BillingPage() {
     setStarting(true);
     const response = await fetch("/api/paystack/trial", { method: "POST" });
     if (!response.ok) {
-      const data = await response.json();
-      setError(data.error || "Unable to start free trial");
+      const data = await readJsonResponse(response);
+      setError(responseError(data, "Unable to start free trial"));
       setStarting(false);
       return;
     }
