@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button"; // Standard shadcn path lowercase mapping
 
 export default function HomePage() {
   return (
@@ -81,40 +81,48 @@ export default function HomePage() {
               <div className="flex-1">
                 <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Free Tier</p>
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">Free</h3>
-                <p className="mt-2 text-sm text-gray-600">Try MenuSaaS free for 30 days.</p>
-                <p className="mt-6 text-3xl font-extrabold text-gray-900">₦0</p>
+                <p className="mt-1 text-3xl font-extrabold text-gray-900">₦0</p>
+                <p className="mt-4 text-sm text-gray-600">Try MenuSaaS free for 30 days.</p>
               </div>
-              <Link href="/register" className="mt-8">
-                <Button className="w-full">Start Free</Button>
-              </Link>
+              <div className="mt-8">
+                <Link href="/register">
+                  <Button className="w-full">Start Free</Button>
+                </Link>
+              </div>
             </div>
 
             {/* Business Standard */}
             <div className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
               <div className="flex-1">
                 <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Business Standard</p>
-                <h3 className="mt-2 text-2xl font-bold text-gray-900">
-                  ₦15,000<span className="text-sm font-medium text-gray-500">/month</span>
-                </h3>
-                <p className="mt-2 text-sm text-gray-600">Essential tools for growing restaurants.</p>
+                <h3 className="mt-2 text-2xl font-bold text-gray-900">Standard</h3>
+                <p className="mt-1 text-3xl font-extrabold text-gray-900">
+                  ₦15,000<span className="text-sm font-medium text-gray-500">/mo</span>
+                </p>
+                <p className="mt-4 text-sm text-gray-600">Essential tools for growing restaurants.</p>
               </div>
-              <Link href="/register" className="mt-8">
-                <Button className="w-full">Choose Standard</Button>
-              </Link>
+              <div className="mt-8">
+                <Link href="/register">
+                  <Button variant="outline" className="w-full">Choose Standard</Button>
+                </Link>
+              </div>
             </div>
 
             {/* Business Elite */}
             <div className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
               <div className="flex-1">
                 <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Business Elite</p>
-                <h3 className="mt-2 text-2xl font-bold text-gray-900">
-                  ₦45,000<span className="text-sm font-medium text-gray-500">/month</span>
-                </h3>
-                <p className="mt-2 text-sm text-gray-600">Advanced tools for ambitious teams.</p>
+                <h3 className="mt-2 text-2xl font-bold text-gray-900">Elite</h3>
+                <p className="mt-1 text-3xl font-extrabold text-gray-900">
+                  ₦45,000<span className="text-sm font-medium text-gray-500">/mo</span>
+                </p>
+                <p className="mt-4 text-sm text-gray-600">Advanced tools for ambitious teams.</p>
               </div>
-              <Link href="/register" className="mt-8">
-                <Button className="w-full">Choose Elite</Button>
-              </Link>
+              <div className="mt-8">
+                <Link href="/register">
+                  <Button variant="outline" className="w-full">Choose Elite</Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
