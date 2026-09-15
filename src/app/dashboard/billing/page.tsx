@@ -14,11 +14,17 @@ type Subscription = {
   amount: number | null;
 };
 
+type BillingStatus = {
+  subscription: Subscription | null;
+  isDemo: boolean;
+};
+
 type BillingInterval = "monthly" | "annually";
 
 export default function BillingPage() {
   const searchParams = useSearchParams();
   const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [isDemo, setIsDemo] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [starting, setStarting] = useState(false);
@@ -42,7 +48,10 @@ export default function BillingPage() {
         if (!response.ok) throw new Error("Unable to load billing status");
         return response.json();
       })
-      .then((data) => setSubscription(data.subscription))
+      .then((data: BillingStatus) => {
+        setSubscription(data.subscription);
+        setIsDemo(data.isDemo);
+      })
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
   }, [searchParams]);
@@ -102,7 +111,9 @@ export default function BillingPage() {
           Current Plan Overview
         </p>
         <p className="mt-1 text-2xl font-bold text-gray-900">
-          {active
+          {isDemo
+            ? "Demo Account"
+            : active
             ? `${subscription?.tier === "elite" ? "Business Elite" : "Business Standard"}`
             : trialing
               ? "Free Trial"
@@ -123,7 +134,7 @@ export default function BillingPage() {
         )}
       </section>
 
-      {(!active || standardActive) && (
+      {!isDemo && (!active || standardActive) && (
         <div className="space-y-8">
           <div className="flex flex-col items-center justify-center space-y-3">
             <div className="inline-flex rounded-lg bg-gray-100 p-1 border border-gray-200">

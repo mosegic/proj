@@ -15,5 +15,9 @@ export async function GET() {
     where: { id: session.userId },
     select: { isDemo: true },
   });
-  return NextResponse.json({ subscription: restaurant.subscription, isDemo: user?.isDemo === true });
+  const isDemo = user?.isDemo === true;
+  return NextResponse.json({
+    subscription: isDemo ? null : restaurant.subscription,
+    isDemo,
+  });
 }
