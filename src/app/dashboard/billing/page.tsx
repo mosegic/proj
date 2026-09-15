@@ -122,7 +122,7 @@ export default function BillingPage() {
         )}
       </section>
 
-      {!active && !trialing && (
+      {!active && (
         <div className="space-y-8">
           <div className="flex flex-col items-center justify-center space-y-3">
             <div className="inline-flex rounded-lg bg-gray-100 p-1 border border-gray-200">
@@ -185,7 +185,8 @@ export default function BillingPage() {
             />
           </div>
 
-          <div className="text-center pt-4">
+          {!trialing && (
+            <div className="text-center pt-4">
             <button
               type="button"
               disabled={starting}
@@ -194,7 +195,8 @@ export default function BillingPage() {
             >
               Not ready to commit? Start a 30-day free trial
             </button>
-          </div>
+            </div>
+          )}
         </div>
       )}
     </div>
