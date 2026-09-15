@@ -10,6 +10,10 @@ function getJwtSecret() {
   return new TextEncoder().encode(secret || "dev-secret-change-me");
 }
 
+export function assertSessionConfiguration() {
+  getJwtSecret();
+}
+
 export const SESSION_COOKIE = "menusaas_session";
 const SESSION_DURATION = 60 * 60 * 24 * 7; // 7 days
 

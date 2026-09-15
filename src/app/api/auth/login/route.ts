@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import db from "@/lib/db";
 import {
+  assertSessionConfiguration,
   createSession,
   hashPassword,
   setSessionCookie,
@@ -16,6 +17,13 @@ export async function POST(request: NextRequest) {
   const parsed = loginSchema.safeParse(body);
   if (!parsed.success) {
     return jsonError("Invalid email or password");
+  }
+
+  try {
+    assertSessionConfiguration();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Authentication is not configured";
+    return jsonError(message, 503);
   }
 
   const { email, password } = parsed.data;

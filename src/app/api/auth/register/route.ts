@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import db from "@/lib/db";
 import {
+  assertSessionConfiguration,
   createSession,
   hashPassword,
   setSessionCookie,
@@ -15,6 +16,13 @@ export async function POST(request: NextRequest) {
   const parsed = registerSchema.safeParse(body);
   if (!parsed.success) {
     return jsonError(parsed.error.issues[0]?.message || "Validation failed");
+  }
+
+  try {
+    assertSessionConfiguration();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Authentication is not configured";
+    return jsonError(message, 503);
   }
 
   const {
