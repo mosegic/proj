@@ -41,6 +41,33 @@ export default function HomePage() {
           </Link>
         </div>
 
+        {/* Features Section */}
+        <div className="mt-24 grid sm:grid-cols-3 gap-8 text-left">
+          {[
+            {
+              icon: "📱",
+              title: "Mobile-First Menus",
+              desc: "Lightweight, fast-loading menu pages optimized for smartphones.",
+            },
+            {
+              icon: "⚡",
+              title: "Real-Time Updates",
+              desc: "Mark items sold out, change prices, hide categories — instantly reflected.",
+            },
+            {
+              icon: "📷",
+              title: "QR Code Generation",
+              desc: "Auto-generate branded QR codes for each table linking to your menu.",
+            },
+          ].map((feature) => (
+            <div key={feature.title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <span className="text-3xl">{feature.icon}</span>
+              <h3 className="mt-3 font-semibold text-gray-900">{feature.title}</h3>
+              <p className="mt-2 text-sm text-gray-600">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+
         {/* Pricing Section */}
         <section className="mt-24 text-left">
           <div className="text-center">
@@ -57,11 +84,9 @@ export default function HomePage() {
                 <p className="mt-2 text-sm text-gray-600">Try MenuSaaS free for 30 days.</p>
                 <p className="mt-6 text-3xl font-extrabold text-gray-900">₦0</p>
               </div>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href="/register" className="flex-1">
-                  <Button className="w-full">Start Free</Button>
-                </Link>
-              </div>
+              <Link href="/register" className="mt-8">
+                <Button className="w-full">Start Free</Button>
+              </Link>
             </div>
 
             {/* Business Standard */}
@@ -93,33 +118,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        {/* Features Section */}
-        <div className="mt-24 grid sm:grid-cols-3 gap-8 text-left">
-          {[
-            {
-              icon: "📱",
-              title: "Mobile-First Menus",
-              desc: "Lightweight, fast-loading menu pages optimized for smartphones.",
-            },
-            {
-              icon: "⚡",
-              title: "Real-Time Updates",
-              desc: "Mark items sold out, change prices, hide categories — instantly reflected.",
-            },
-            {
-              icon: "📷",
-              title: "QR Code Generation",
-              desc: "Auto-generate branded QR codes for each table linking to your menu.",
-            },
-          ].map((feature) => (
-            <div key={feature.title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <span className="text-3xl">{feature.icon}</span>
-              <h3 className="mt-3 font-semibold text-gray-900">{feature.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{feature.desc}</p>
-            </div>
-          ))}
-        </div>
       </main>
     </div>
   );
