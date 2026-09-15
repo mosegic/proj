@@ -124,3 +124,7 @@ Open [http://localhost:3000](http://localhost:3000).
 Public menus accept an optional language query parameter, for example
 `/menu/demo-cafe?lang=fr` or `/menu/demo-cafe/table/1?lang=sw`. If a translation is
 not available, the original menu text is displayed.
+
+Paystack renewal `charge.success` events are matched by subscription code, while
+failed invoice payments are marked `past_due` and disabled subscriptions are
+marked `cancelled`.

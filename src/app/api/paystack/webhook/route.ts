@@ -15,8 +15,15 @@ export async function POST(request: Request) {
     };
   };
   if (event.event === "charge.success" && event.data.reference) {
-    const subscription = await db.subscription.findUnique({
-      where: { transactionReference: event.data.reference },
+    const subscription = await db.subscription.findFirst({
+      where: {
+        OR: [
+          { transactionReference: event.data.reference },
+          ...(event.data.subscription?.subscription_code
+            ? [{ subscriptionCode: event.data.subscription.subscription_code }]
+            : []),
+        ],
+      },
     });
     if (subscription) {
       await db.subscription.update({
@@ -34,6 +41,14 @@ export async function POST(request: Request) {
         },
       });
     }
+  } else if (
+    event.event === "invoice.payment_failed" &&
+    event.data.subscription?.subscription_code
+  ) {
+    await db.subscription.updateMany({
+      where: { subscriptionCode: event.data.subscription.subscription_code },
+      data: { status: "past_due" },
+    });
   } else if (event.event === "subscription.disable" && event.data.subscription?.subscription_code) {
     await db.subscription.updateMany({
       where: { subscriptionCode: event.data.subscription.subscription_code },
