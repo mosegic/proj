@@ -1,4 +1,5 @@
 import db from "@/lib/db";
+import { isAdminEmail } from "@/lib/admin";
 
 export type SubscriptionTier = "standard" | "elite";
 
@@ -14,12 +15,17 @@ export async function getRestaurantTier(restaurantId: string): Promise<Subscript
   const restaurant = await db.restaurant.findUnique({
     where: { id: restaurantId },
     select: {
-      owner: { select: { isDemo: true } },
+      owner: { select: { isDemo: true, email: true } },
       subscription: { select: { status: true, tier: true } },
     },
   });
 
-  if (restaurant?.owner.isDemo) return "elite";
+  if (
+    restaurant?.owner.isDemo ||
+    (restaurant?.owner.email ? isAdminEmail(restaurant.owner.email) : false)
+  ) {
+    return "elite";
+  }
 
   const subscription = restaurant?.subscription;
   if (

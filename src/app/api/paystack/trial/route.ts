@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import db from "@/lib/db";
+import { isAdminEmail } from "@/lib/admin";
 
 export async function POST() {
   const session = await getSession();
@@ -8,9 +9,9 @@ export async function POST() {
 
   const user = await db.user.findUnique({
     where: { id: session.userId },
-    select: { isDemo: true },
+    select: { isDemo: true, email: true },
   });
-  if (user?.isDemo) {
+  if (user?.isDemo || (user?.email ? isAdminEmail(user.email) : false)) {
     return NextResponse.json({ error: "Demo accounts do not use subscription billing" }, { status: 403 });
   }
 
