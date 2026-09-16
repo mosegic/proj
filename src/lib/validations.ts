@@ -17,6 +17,7 @@ export const registerSchema = z.object({
   themeColor: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
   accentColor: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
   logoUrl: z.string().url().optional().or(z.literal("")),
+  whatsappNumber: z.string().max(30).optional().or(z.literal("")),
 });
 
 export const loginSchema = z.object({

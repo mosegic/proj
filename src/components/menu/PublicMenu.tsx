@@ -24,6 +24,7 @@ interface Restaurant {
   name: string;
   description: string | null;
   logoUrl: string | null;
+  whatsappNumber: string | null;
   themeColor: string;
   accentColor: string;
   categories: Category[];
@@ -55,6 +56,7 @@ export function PublicMenu({
 }: PublicMenuProps) {
   const theme = restaurant.themeColor;
   const languages = restaurant.availableLanguages || [];
+  const whatsappDigits = restaurant.whatsappNumber?.replace(/\D/g, "");
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -110,6 +112,17 @@ export function PublicMenu({
                 </a>
               ))}
             </nav>
+          )}
+          {whatsappDigits && whatsappDigits.length >= 8 && (
+            <a
+              href={`https://wa.me/${whatsappDigits}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#20bd5a]"
+            >
+              <span aria-hidden="true">💬</span>
+              Chat on WhatsApp
+            </a>
           )}
         </div>
       </header>
