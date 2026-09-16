@@ -61,9 +61,14 @@ export async function POST(request: Request) {
       amount,
       currency: "KES",
       plan: planCode,
-      callback_url: getPaystackCallbackUrl(),
-      metadata: { restaurantId: restaurant.id },
+      callback_url: getPaystackCallbackUrl(request.url),
+      metadata: {
+        restaurantId: restaurant.id,
+        tier: body.plan,
+        interval: body.interval,
+      },
     });
+    const transactionReference = transaction.reference || reference;
 
     await db.subscription.upsert({
       where: { restaurantId: restaurant.id },
@@ -72,14 +77,14 @@ export async function POST(request: Request) {
         tier: body.plan,
         email: session.email,
         planCode,
-        transactionReference: reference,
+        transactionReference,
       },
       update: {
         status: "pending",
         tier: body.plan,
         planCode,
         email: session.email,
-        transactionReference: reference,
+        transactionReference,
       },
     });
 

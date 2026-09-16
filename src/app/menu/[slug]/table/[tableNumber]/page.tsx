@@ -27,6 +27,8 @@ export default async function TableMenuPage({ params, searchParams }: PageProps)
     <PublicMenu
       restaurant={restaurant}
       tableNumber={parseInt(tableNumber)}
+      menuPath={`/menu/${slug}/table/${tableNumber}`}
+      languageCode={lang}
     />
   );
 }

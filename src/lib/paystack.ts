@@ -14,6 +14,11 @@ export interface PaystackTransaction {
   amount: number;
   currency: string;
   customer: { email: string; customer_code: string };
+  metadata?: {
+    restaurantId?: string;
+    tier?: string;
+    interval?: string;
+  };
   authorization?: { authorization_code: string };
   plan?: { plan_code: string };
   subscription?: { subscription_code: string; next_payment_date: string };
@@ -76,8 +81,15 @@ export function getPaystackAmount(plan: PaidPlan, interval: BillingInterval) {
   return amount;
 }
 
-export function getPaystackCallbackUrl() {
-  return `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/dashboard/billing`;
+export function getPaystackCallbackUrl(requestUrl?: string) {
+  if (requestUrl) {
+    return new URL("/dashboard/billing", requestUrl).toString();
+  }
+
+  return new URL(
+    "/dashboard/billing",
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  ).toString();
 }
 
 export function initializePaystackTransaction(payload: {
@@ -87,7 +99,11 @@ export function initializePaystackTransaction(payload: {
   currency: "KES";
   plan: string;
   callback_url: string;
-  metadata: { restaurantId: string };
+  metadata: {
+    restaurantId: string;
+    tier?: PaidPlan;
+    interval?: BillingInterval;
+  };
 }) {
   return paystackRequest<{
     authorization_url: string;

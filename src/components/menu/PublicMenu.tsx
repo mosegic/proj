@@ -27,11 +27,14 @@ interface Restaurant {
   themeColor: string;
   accentColor: string;
   categories: Category[];
+  availableLanguages?: string[];
 }
 
 interface PublicMenuProps {
   restaurant: Restaurant;
   tableNumber?: number;
+  menuPath: string;
+  languageCode?: string;
 }
 
 function formatPrice(price: MonetaryValue): string {
@@ -44,8 +47,14 @@ function formatPrice(price: MonetaryValue): string {
   }).format(num);
 }
 
-export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
+export function PublicMenu({
+  restaurant,
+  tableNumber,
+  menuPath,
+  languageCode,
+}: PublicMenuProps) {
   const theme = restaurant.themeColor;
+  const languages = restaurant.availableLanguages || [];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -75,6 +84,32 @@ export function PublicMenu({ restaurant, tableNumber }: PublicMenuProps) {
           </div>
           {restaurant.description && (
             <p className="mt-2 text-sm opacity-90">{restaurant.description}</p>
+          )}
+          {languages.length > 0 && (
+            <nav className="mt-4 flex items-center gap-2" aria-label="Menu language">
+              <span className="text-xs opacity-80">Language:</span>
+              <a
+                href={menuPath}
+                className={`rounded-full px-3 py-1 text-xs font-medium ${
+                  !languageCode ? "bg-white text-gray-900" : "bg-white/20 hover:bg-white/30"
+                }`}
+              >
+                Original
+              </a>
+              {languages.map((language) => (
+                <a
+                  key={language}
+                  href={`${menuPath}?lang=${encodeURIComponent(language)}`}
+                  className={`rounded-full px-3 py-1 text-xs font-medium uppercase ${
+                    languageCode === language
+                      ? "bg-white text-gray-900"
+                      : "bg-white/20 hover:bg-white/30"
+                  }`}
+                >
+                  {language}
+                </a>
+              ))}
+            </nav>
           )}
         </div>
       </header>
