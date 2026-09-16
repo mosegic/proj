@@ -11,6 +11,7 @@ interface DashboardNavProps {
     slug: string;
     themeColor: string;
   };
+  isAdmin?: boolean;
 }
 
 const navItems = [
@@ -22,7 +23,7 @@ const navItems = [
   { href: "/dashboard/billing", label: "Billing", icon: "💳" },
 ];
 
-export function DashboardNav({ restaurant }: DashboardNavProps) {
+export function DashboardNav({ restaurant, isAdmin = false }: DashboardNavProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -31,11 +32,15 @@ export function DashboardNav({ restaurant }: DashboardNavProps) {
     router.push("/login");
   }
 
+  const visibleNavItems = isAdmin
+    ? [...navItems, { href: "/admin", label: "Admin Testing", icon: "🛠️" }]
+    : navItems;
+
   return (
     <>
       <div className="lg:hidden fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 z-50">
         <nav className="flex justify-around py-2">
-          {navItems.map((item) => (
+          {visibleNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -67,7 +72,7 @@ export function DashboardNav({ restaurant }: DashboardNavProps) {
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
-          {navItems.map((item) => (
+          {visibleNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
