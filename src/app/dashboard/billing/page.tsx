@@ -79,19 +79,6 @@ export default function BillingPage() {
     window.location.href = data.authorizationUrl;
   }
 
-  async function startTrial() {
-    setError("");
-    setStarting(true);
-    const response = await fetch("/api/paystack/trial", { method: "POST" });
-    if (!response.ok) {
-      const data = await readJsonResponse(response);
-      setError(responseError(data, "Unable to start free trial"));
-      setStarting(false);
-      return;
-    }
-    window.location.reload();
-  }
-
   if (loading) return <div className="animate-pulse h-40 rounded-lg bg-gray-100" />;
   const active = subscription?.status === "active";
   const trialing = subscription?.status === "trialing";
@@ -205,18 +192,6 @@ export default function BillingPage() {
             />
           </div>
 
-          {!trialing && (
-            <div className="text-center pt-4">
-            <button
-              type="button"
-              disabled={starting}
-              onClick={startTrial}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 underline transition decoration-gray-400 underline-offset-4 disabled:opacity-50"
-            >
-              Not ready to commit? Start a 30-day free trial
-            </button>
-            </div>
-          )}
         </div>
       )}
     </div>
