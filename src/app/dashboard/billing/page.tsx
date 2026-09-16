@@ -32,7 +32,7 @@ export default function BillingPage() {
   const [billingInterval, setBillingInterval] = useState<BillingInterval>("monthly");
 
   useEffect(() => {
-    const reference = searchParams.get("reference");
+    const reference = searchParams.get("reference") || searchParams.get("trxref");
     const verify = reference
       ? fetch(`/api/paystack/verify/${encodeURIComponent(reference)}`)
       : Promise.resolve(new Response(null, { status: 204 }));

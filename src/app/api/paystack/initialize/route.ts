@@ -62,7 +62,11 @@ export async function POST(request: Request) {
       currency: "KES",
       plan: planCode,
       callback_url: getPaystackCallbackUrl(),
-      metadata: { restaurantId: restaurant.id },
+      metadata: {
+        restaurantId: restaurant.id,
+        tier: body.plan,
+        interval: body.interval,
+      },
     });
 
     await db.subscription.upsert({

@@ -14,6 +14,11 @@ export interface PaystackTransaction {
   amount: number;
   currency: string;
   customer: { email: string; customer_code: string };
+  metadata?: {
+    restaurantId?: string;
+    tier?: string;
+    interval?: string;
+  };
   authorization?: { authorization_code: string };
   plan?: { plan_code: string };
   subscription?: { subscription_code: string; next_payment_date: string };
@@ -87,7 +92,11 @@ export function initializePaystackTransaction(payload: {
   currency: "KES";
   plan: string;
   callback_url: string;
-  metadata: { restaurantId: string };
+  metadata: {
+    restaurantId: string;
+    tier?: PaidPlan;
+    interval?: BillingInterval;
+  };
 }) {
   return paystackRequest<{
     authorization_url: string;
