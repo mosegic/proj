@@ -51,8 +51,9 @@ export const tableSchema = z.object({
 
 export const restaurantUpdateSchema = z.object({
   name: z.string().min(2).optional(),
-  description: z.string().optional(),
-  logoUrl: z.string().url().optional().or(z.literal("")),
+  description: z.string().nullable().optional(),
+  logoUrl: z.string().url().nullable().optional().or(z.literal("")),
+  whatsappNumber: z.string().max(30).nullable().optional().or(z.literal("")),
   themeColor: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
   accentColor: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
   isActive: z.boolean().optional(),
