@@ -81,8 +81,15 @@ export function getPaystackAmount(plan: PaidPlan, interval: BillingInterval) {
   return amount;
 }
 
-export function getPaystackCallbackUrl() {
-  return `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/dashboard/billing`;
+export function getPaystackCallbackUrl(requestUrl?: string) {
+  if (requestUrl) {
+    return new URL("/dashboard/billing", requestUrl).toString();
+  }
+
+  return new URL(
+    "/dashboard/billing",
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  ).toString();
 }
 
 export function initializePaystackTransaction(payload: {

@@ -61,7 +61,7 @@ export async function POST(request: Request) {
       amount,
       currency: "KES",
       plan: planCode,
-      callback_url: getPaystackCallbackUrl(),
+      callback_url: getPaystackCallbackUrl(request.url),
       metadata: {
         restaurantId: restaurant.id,
         tier: body.plan,
