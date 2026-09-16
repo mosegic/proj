@@ -10,6 +10,7 @@ interface Restaurant {
   slug: string;
   description: string | null;
   logoUrl: string | null;
+  whatsappNumber: string | null;
   themeColor: string;
   accentColor: string;
 }
@@ -81,6 +82,15 @@ export default function SettingsPage() {
           value={restaurant.logoUrl || ""}
           onChange={(e) => setRestaurant({ ...restaurant, logoUrl: e.target.value })}
         />
+        <Input
+          label="WhatsApp number"
+          placeholder="+254 712 345 678"
+          value={restaurant.whatsappNumber || ""}
+          onChange={(e) => setRestaurant({ ...restaurant, whatsappNumber: e.target.value })}
+        />
+        <p className="text-xs text-gray-500">
+          Include your country code. Customers will see a WhatsApp contact button on your public menu.
+        </p>
         <div className="grid grid-cols-2 gap-4">
           <Input
             label="Theme Color"

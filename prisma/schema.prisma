@@ -24,6 +24,7 @@ model Restaurant {
   name        String
   description String?
   logoUrl     String?
+  whatsappNumber String?
   themeColor  String     @default("#2563eb")
   accentColor String     @default("#1e40af")
   isActive    Boolean    @default(true)
