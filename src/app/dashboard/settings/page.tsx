@@ -44,10 +44,11 @@ export default function SettingsPage() {
       body: JSON.stringify(restaurant),
     });
 
+    const data = (await res.json().catch(() => ({}))) as { error?: string };
     if (res.ok) {
       setMessage("Settings saved!");
     } else {
-      setMessage("Failed to save settings.");
+      setMessage(data.error || "Failed to save settings.");
     }
     setSaving(false);
   }
