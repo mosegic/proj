@@ -48,6 +48,7 @@ Update `.env` with your connection string:
 ```
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/menusaas"
 JWT_SECRET="your-random-secret"
+ADMIN_EMAIL="admin@example.com"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 PAYSTACK_SECRET_KEY="sk_test_..."
 PAYSTACK_STANDARD_MONTHLY_PLAN_CODE="PLN_..."
@@ -59,6 +60,11 @@ PAYSTACK_STANDARD_ANNUAL_AMOUNT_CENTS="1500000"
 PAYSTACK_ELITE_MONTHLY_AMOUNT_CENTS="350000"
 PAYSTACK_ELITE_ANNUAL_AMOUNT_CENTS="3500000"
 ```
+
+`ADMIN_EMAIL` protects the `/admin` testing panel. It must contain the exact
+email address of the administrator's authenticated account. The panel creates
+accounts with `isDemo=true`, so they inherit Elite entitlements without going
+through Paystack. Generated passwords are displayed only once.
 
 Subscription pricing is configured as:
 
