@@ -24,5 +24,11 @@ export default async function PublicMenuPage({ params, searchParams }: PageProps
   const restaurant = await getRestaurantBySlug(slug, lang);
   if (!restaurant) notFound();
 
-  return <PublicMenu restaurant={restaurant} />;
+  return (
+    <PublicMenu
+      restaurant={restaurant}
+      menuPath={`/menu/${slug}`}
+      languageCode={lang}
+    />
+  );
 }

@@ -21,7 +21,7 @@ export async function getUserRestaurants() {
 }
 
 export async function getRestaurantBySlug(slug: string, languageCode?: string) {
-  return db.restaurant.findUnique({
+  const restaurant = await db.restaurant.findUnique({
     where: { slug, isActive: true },
     include: {
       categories: {
@@ -45,6 +45,31 @@ export async function getRestaurantBySlug(slug: string, languageCode?: string) {
       },
     },
   });
+
+  if (!restaurant) return null;
+
+  const [categoryLanguages, itemLanguages] = await Promise.all([
+    db.categoryTranslation.findMany({
+      where: { category: { restaurantId: restaurant.id } },
+      distinct: ["languageCode"],
+      select: { languageCode: true },
+    }),
+    db.menuItemTranslation.findMany({
+      where: { menuItem: { category: { restaurantId: restaurant.id } } },
+      distinct: ["languageCode"],
+      select: { languageCode: true },
+    }),
+  ]);
+
+  return {
+    ...restaurant,
+    availableLanguages: Array.from(
+      new Set([
+        ...categoryLanguages.map(({ languageCode }) => languageCode),
+        ...itemLanguages.map(({ languageCode }) => languageCode),
+      ])
+    ).sort(),
+  };
 }
 
 export function getMenuUrl(slug: string, tableNumber?: number): string {
