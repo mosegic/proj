@@ -64,21 +64,21 @@ export function PublicMenu({
         className="sticky top-0 z-10 shadow-sm"
         style={{ backgroundColor: theme }}
       >
-        <div className="max-w-lg mx-auto px-4 py-5 text-white">
+        <div className="max-w-lg mx-auto px-4 py-6 text-white">
           <div className="flex items-center gap-3">
             {restaurant.logoUrl ? (
               <img
                 src={restaurant.logoUrl}
                 alt={restaurant.name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-white/30"
+                className="w-16 h-16 rounded-2xl object-cover border-4 border-white/70 shadow-lg ring-2 ring-white/20"
               />
             ) : (
-              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-xl font-bold">
+              <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-2xl font-bold border-4 border-white/40 shadow-lg">
                 {restaurant.name.charAt(0)}
               </div>
             )}
             <div>
-              <h1 className="text-xl font-bold">{restaurant.name}</h1>
+              <h1 className="text-2xl font-bold tracking-tight">{restaurant.name}</h1>
               {tableNumber && (
                 <p className="text-sm opacity-80">Table {tableNumber}</p>
               )}
@@ -127,26 +127,35 @@ export function PublicMenu({
         </div>
       </header>
 
-<main className="max-w-lg mx-auto px-4 py-6 pb-20 space-y-8">
+<main className="max-w-lg mx-auto px-4 py-7 pb-20 space-y-6">
   {restaurant.categories.length === 0 ? (
     <p className="text-center text-gray-500 py-12">Menu coming soon...</p>
   ) : (
     restaurant.categories.map((category) => {
       const categoryTranslation = category.translations?.[0];
       return (
-      <section key={category.id}>
-        <h2
-          className="text-lg font-bold mb-1 sticky top-[88px] bg-gray-50 py-2"
-          style={{ color: theme }}
-        >
-          {categoryTranslation?.name || category.name}
-        </h2>
-        {(categoryTranslation?.description || category.description) && (
-          <p className="text-sm text-gray-500 mb-3">
-            {categoryTranslation?.description || category.description}
-          </p>
-        )}
-        <div className="space-y-3">
+      <section key={category.id} className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <div className="border-b border-gray-100 px-4 py-4 sm:px-5">
+          <div className="flex items-center gap-3">
+            <span
+              className="h-8 w-1 rounded-full"
+              style={{ backgroundColor: theme }}
+              aria-hidden="true"
+            />
+            <h2
+              className="text-xl font-bold tracking-tight"
+              style={{ color: theme }}
+            >
+              {categoryTranslation?.name || category.name}
+            </h2>
+          </div>
+          {(categoryTranslation?.description || category.description) && (
+            <p className="mt-2 pl-4 text-sm leading-6 text-gray-500">
+              {categoryTranslation?.description || category.description}
+            </p>
+          )}
+        </div>
+        <div className="space-y-3 bg-gray-50/70 p-3 sm:p-4">
           {category.items.map((item) => {
             const itemTranslation = item.translations?.[0];
             return (
@@ -154,7 +163,7 @@ export function PublicMenu({
               key={item.id}
               className={`bg-white rounded-xl shadow-sm overflow-hidden ${
                 item.isSoldOut ? "opacity-50" : ""
-              }`}
+              } border border-gray-100`}
             >
               <div className="p-4 flex flex-col gap-3">
                 {/* Top Section: Title & Price */}
