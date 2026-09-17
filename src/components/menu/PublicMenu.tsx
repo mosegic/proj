@@ -59,7 +59,7 @@ export function PublicMenu({
   const whatsappDigits = restaurant.whatsappNumber?.replace(/\D/g, "");
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-400">
       <header
         className="sticky top-0 z-10 shadow-sm"
         style={{ backgroundColor: theme }}
