@@ -123,8 +123,8 @@ export function PublicMenu({
               rel="noopener noreferrer"
               className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#20bd5a]"
             >
-              <span aria-hidden="true">💬</span>
-              Chat on WhatsApp
+           
+              WhatsApp
             </a>
           )}
         </div>
