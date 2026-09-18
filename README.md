@@ -63,6 +63,17 @@ PAYSTACK_ELITE_MONTHLY_AMOUNT_CENTS="350000"
 PAYSTACK_ELITE_ANNUAL_AMOUNT_CENTS="3500000"
 ```
 
+The `PAYSTACK_*_PLAN_CODE` values must reference plans that exist in your
+Paystack account, in the same mode (test vs live) as `PAYSTACK_SECRET_KEY`.
+Instead of creating them by hand in the Paystack dashboard, run:
+```bash
+npm run paystack:setup-plans
+```
+This creates the four KES plans (Standard/Elite × Monthly/Annual) via the
+Paystack API — or reuses them if they already exist — and prints the plan
+codes to paste into `.env.local` and into Vercel's Production environment
+variables. Run it once per Paystack mode you use (test and, separately, live).
+
 `ADMIN_EMAIL` protects the `/admin` testing panel. It must contain the exact
 email address of the administrator's authenticated account. The panel creates
 accounts with `isDemo=true`, so they inherit Elite entitlements without going
