@@ -10,7 +10,8 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "npx tsx prisma/seed.ts",
-    "db:setup": "prisma db push && npx tsx prisma/seed.ts"
+    "db:setup": "prisma db push && npx tsx prisma/seed.ts",
+    "paystack:setup-plans": "npx tsx scripts/setup-paystack-plans.ts"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
