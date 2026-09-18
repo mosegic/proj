@@ -6,12 +6,12 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) {
-    throw new Error("DATABASE_URL is not configured");
-  }
-
-  const adapter = new PrismaPg({ connectionString });
+  // Prisma is imported while Next.js collects route metadata during builds.
+  // The adapter will report a connection error when a request uses the client
+  // if the runtime environment has not provided DATABASE_URL.
+  const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL || "",
+  });
   return new PrismaClient({ adapter });
 }
 
