@@ -44,9 +44,11 @@ docker compose up -d
 npx prisma dev
 ```
 
-Update `.env` with your connection string:
+Update `.env` with your connection strings. Use the pooled URL for application
+traffic and the direct URL for Prisma schema operations:
 ```
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/menusaas"
+DATABASE_URL_UNPOOLED="******localhost:5432/menusaas"
 JWT_SECRET="your-random-secret"
 ADMIN_EMAIL="admin@example.com"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
