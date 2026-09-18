@@ -1,3 +1,7 @@
+import { CurrencyProvider } from "./CurrencyContext";
+import { CurrencySelector } from "./CurrencySelector";
+import { PriceDisplay } from "./PriceDisplay";
+
 type MonetaryValue = string | number | { toString(): string };
 
 interface MenuItem {
@@ -38,16 +42,6 @@ interface PublicMenuProps {
   languageCode?: string;
 }
 
-function formatPrice(price: MonetaryValue): string {
-  const num = typeof price === "string" || typeof price === "number"
-    ? Number(price)
-    : Number(price.toString());
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(num);
-}
-
 export function PublicMenu({
   restaurant,
   tableNumber,
@@ -59,7 +53,8 @@ export function PublicMenu({
   const whatsappDigits = restaurant.whatsappNumber?.replace(/\D/g, "");
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <CurrencyProvider>
+    <div className="min-h-screen bg-gray-100">
       <header
         className="sticky top-0 z-10 shadow-sm"
         style={{ backgroundColor: theme }}
@@ -113,6 +108,7 @@ export function PublicMenu({
               ))}
             </nav>
           )}
+          <CurrencySelector />
           {whatsappDigits && whatsappDigits.length >= 8 && (
             <a
               href={`https://wa.me/${whatsappDigits}`}
@@ -175,7 +171,7 @@ export function PublicMenu({
                     className="font-bold text-base whitespace-nowrap"
                     style={{ color: theme }}
                   >
-                    {formatPrice(item.price)}
+                    <PriceDisplay price={item.price} />
                   </span>
                 </div>
 
@@ -219,8 +215,9 @@ export function PublicMenu({
                           className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full"
                         >
                           {opt.name}
-                          {opt.priceDelta && parseFloat(String(opt.priceDelta)) > 0 &&
-                            ` +${formatPrice(opt.priceDelta)}`}
+                          {opt.priceDelta && parseFloat(String(opt.priceDelta)) > 0 && (
+                            <span> +<PriceDisplay price={opt.priceDelta} /></span>
+                          )}
                         </span>
                       ))}
                     </div>
@@ -244,5 +241,6 @@ export function PublicMenu({
         </p>
       </footer>
     </div>
+    </CurrencyProvider>
   );
 }
