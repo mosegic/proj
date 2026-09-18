@@ -1,6 +1,7 @@
 import { CurrencyProvider } from "./CurrencyContext";
 import { CurrencySelector } from "./CurrencySelector";
 import { PriceDisplay } from "./PriceDisplay";
+import { ImageWithPlaceholder } from "./ImageWithPlaceholder";
 
 type MonetaryValue = string | number | { toString(): string };
 
@@ -62,10 +63,16 @@ export function PublicMenu({
         <div className="max-w-lg mx-auto px-4 py-6 text-white">
           <div className="flex items-center gap-3">
             {restaurant.logoUrl ? (
-              <img
+              <ImageWithPlaceholder
                 src={restaurant.logoUrl}
                 alt={restaurant.name}
-                className="w-16 h-16 rounded-2xl object-cover border-4 border-white/70 shadow-lg ring-2 ring-white/20"
+                containerClassName="w-16 h-16 rounded-2xl overflow-hidden border-4 border-white/70 shadow-lg ring-2 ring-white/20"
+                imageClassName="w-16 h-16 object-cover"
+                fallback={
+                  <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-2xl font-bold border-4 border-white/40 shadow-lg">
+                    {restaurant.name.charAt(0)}
+                  </div>
+                }
               />
             ) : (
               <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-2xl font-bold border-4 border-white/40 shadow-lg">
@@ -184,14 +191,12 @@ export function PublicMenu({
 
          {/* Original Uncropped Image Box with Stable Height Constraint */}
 {item.imageUrl && (
-  <div className="w-full h-48 sm:h-56 mt-2 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center">
-    <img
-      src={item.imageUrl}
-      alt={item.name}
-      className="w-full h-full object-contain transition-transform duration-300 hover:scale-[1.02]"
-      loading="lazy"
-    />
-  </div>
+  <ImageWithPlaceholder
+    src={item.imageUrl}
+    alt={item.name}
+    containerClassName="w-full h-48 sm:h-56 mt-2 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center"
+    imageClassName="w-full h-full object-contain transition-transform duration-300 hover:scale-[1.02]"
+  />
 )}
 
 
