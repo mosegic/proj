@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { readJsonResponse, responseError } from "@/lib/client-api";
@@ -18,6 +19,7 @@ export function RegisterForm() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -42,6 +44,10 @@ export function RegisterForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!agreedToTerms) {
+      setError("You must agree to the Terms of Use and Privacy Policy to continue.");
+      return;
+    }
     setLoading(true);
     setError("");
 
@@ -151,11 +157,31 @@ export function RegisterForm() {
               ))}
             </div>
           </div>
+          <label className="flex items-start gap-2 text-xs text-gray-600">
+            <input
+              type="checkbox"
+              checked={agreedToTerms}
+              onChange={(e) => setAgreedToTerms(e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              required
+            />
+            <span>
+              I agree to the{" "}
+              <Link href="/terms" target="_blank" className="text-blue-600 hover:underline">
+                Terms of Use
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" target="_blank" className="text-blue-600 hover:underline">
+                Privacy Policy
+              </Link>
+              .
+            </span>
+          </label>
           <div className="flex gap-3">
             <Button type="button" variant="secondary" onClick={() => setStep(1)}>
               Back
             </Button>
-            <Button type="submit" loading={loading} className="flex-1">
+            <Button type="submit" loading={loading} className="flex-1" disabled={!agreedToTerms}>
               Create Account
             </Button>
           </div>
