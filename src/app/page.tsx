@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { Footer } from "@/components/layout/Footer";
 
 export default function HomePage() {
   return (
@@ -127,6 +128,7 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }

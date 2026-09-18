@@ -17,6 +17,17 @@ export default function LoginPage() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
           <LoginForm />
         </div>
+        <p className="text-center text-xs text-gray-500 mt-4">
+          By signing in, you agree to our{" "}
+          <Link href="/terms" className="text-blue-600 hover:underline">
+            Terms of Use
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="text-blue-600 hover:underline">
+            Privacy Policy
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

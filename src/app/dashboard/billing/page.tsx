@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { readJsonResponse, responseError } from "@/lib/client-api";
 
@@ -191,6 +192,18 @@ export default function BillingPage() {
               onChoose={() => subscribe("elite", billingInterval)}
             />
           </div>
+
+          <p className="text-center text-xs text-gray-500">
+            By subscribing you agree to our{" "}
+            <Link href="/terms" target="_blank" className="text-blue-600 hover:underline">
+              Terms of Use
+            </Link>{" "}
+            and{" "}
+            <Link href="/privacy" target="_blank" className="text-blue-600 hover:underline">
+              Privacy Policy
+            </Link>
+            . Payments are securely processed by Paystack.
+          </p>
 
         </div>
       )}
