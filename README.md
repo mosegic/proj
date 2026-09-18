@@ -84,6 +84,10 @@ Subscription pricing is configured as:
 npm run db:setup
 ```
 
+Run database setup separately from the application build. The production build
+only generates Prisma Client and builds Next.js; it does not change the schema
+or require the database to be reachable during a Vercel build.
+
 ### 3. Run the dev server
 
 ```bash
