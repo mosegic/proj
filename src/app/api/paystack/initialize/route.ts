@@ -71,6 +71,15 @@ export async function POST(request: Request) {
     });
     const transactionReference = transaction.reference || reference;
 
+    // Only downgrade the visible plan state to "pending" when there is no
+    // existing trial/active subscription to preserve. If the user is
+    // currently trialing or on an active plan (e.g. Standard upgrading to
+    // Elite), keep that status intact so abandoning checkout does not strand
+    // them without a plan — the transactionReference is still recorded so
+    // verify()/webhook can find and activate this row once payment succeeds.
+    const preserveCurrentState =
+      existing?.status === "trialing" || existing?.status === "active";
+
     await db.subscription.upsert({
       where: { restaurantId: restaurant.id },
       create: {
@@ -80,13 +89,15 @@ export async function POST(request: Request) {
         planCode,
         transactionReference,
       },
-      update: {
-        status: "pending",
-        tier: body.plan,
-        planCode,
-        email: session.email,
-        transactionReference,
-      },
+      update: preserveCurrentState
+        ? { transactionReference }
+        : {
+            status: "pending",
+            tier: body.plan,
+            planCode,
+            email: session.email,
+            transactionReference,
+          },
     });
 
     return NextResponse.json({

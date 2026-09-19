@@ -1,19 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import db from "@/lib/db";
-import { verifyPaystackTransaction } from "@/lib/paystack";
-
-function inferTier(transaction: Awaited<ReturnType<typeof verifyPaystackTransaction>>) {
-  if (transaction.metadata?.tier === "elite") return "elite";
-
-  const elitePlanCodes = [
-    process.env.PAYSTACK_ELITE_MONTHLY_PLAN_CODE,
-    process.env.PAYSTACK_ELITE_ANNUAL_PLAN_CODE,
-  ];
-  return transaction.plan?.plan_code && elitePlanCodes.includes(transaction.plan.plan_code)
-    ? "elite"
-    : "standard";
-}
+import { inferPaystackTier, verifyPaystackTransaction } from "@/lib/paystack";
 
 export async function GET(
   _request: Request,
@@ -71,14 +59,14 @@ export async function GET(
         create: {
           restaurantId: restaurant.id,
           status: "pending",
-          tier: inferTier(transaction),
+          tier: inferPaystackTier(transaction),
           planCode: transaction.plan?.plan_code || "paystack-recovered",
           email: transaction.customer.email,
           transactionReference: transaction.reference,
         },
         update: {
           transactionReference: transaction.reference,
-          tier: inferTier(transaction),
+          tier: inferPaystackTier(transaction),
           planCode: transaction.plan?.plan_code || undefined,
         },
         include: { restaurant: true },
@@ -112,6 +100,7 @@ export async function GET(
       where: { id: subscription.id },
       data: {
         status: "active",
+        tier: inferPaystackTier(transaction),
         customerCode: transaction.customer.customer_code,
         subscriptionCode: transaction.subscription?.subscription_code,
         authorizationCode: transaction.authorization?.authorization_code,
