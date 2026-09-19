@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
-import { isPaystackWebhookValid, PaystackTransaction } from "@/lib/paystack";
+import { inferPaystackTier, isPaystackWebhookValid, PaystackTransaction } from "@/lib/paystack";
 
 export async function POST(request: Request) {
   const payload = await request.text();
@@ -30,6 +30,7 @@ export async function POST(request: Request) {
         where: { id: subscription.id },
         data: {
           status: "active",
+          tier: inferPaystackTier(event.data),
           customerCode: event.data.customer?.customer_code,
           subscriptionCode: event.data.subscription?.subscription_code,
           authorizationCode: event.data.authorization?.authorization_code,

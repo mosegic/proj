@@ -80,10 +80,25 @@ export default function BillingPage() {
     window.location.href = data.authorizationUrl;
   }
 
+  async function startFreeTrial() {
+    setError("");
+    setStarting(true);
+    const response = await fetch("/api/paystack/trial", { method: "POST" });
+    const data = await readJsonResponse<{ subscription?: Subscription; error?: string }>(response);
+    if (!response.ok) {
+      setError(responseError(data, "Unable to start free trial"));
+      setStarting(false);
+      return;
+    }
+    if (data.subscription) setSubscription(data.subscription);
+    setStarting(false);
+  }
+
   if (loading) return <div className="animate-pulse h-40 rounded-lg bg-gray-100" />;
   const active = subscription?.status === "active";
   const trialing = subscription?.status === "trialing";
   const standardActive = active && subscription?.tier === "standard";
+  const canStartTrial = !isDemo && !active && !trialing && !subscription?.trialEndsAt;
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 py-6">
@@ -125,6 +140,16 @@ export default function BillingPage() {
               {new Date(subscription.nextPaymentDate).toLocaleDateString()}
             </span>
           </p>
+        )}
+        {canStartTrial && (
+          <div className="mt-4 space-y-2">
+            <p className="text-sm text-gray-600">
+              Not ready to commit? Try MenuSaaS free for 30 days before choosing a paid plan.
+            </p>
+            <Button onClick={startFreeTrial} loading={starting} variant="secondary">
+              Continue with 30-day Free Trial
+            </Button>
+          </div>
         )}
       </section>
 

@@ -69,6 +69,29 @@ export function getPaystackPlanCode(plan: PaidPlan, interval: BillingInterval) {
   return planCode;
 }
 
+/**
+ * Determines whether a Paystack transaction corresponds to the "standard" or
+ * "elite" tier, preferring the metadata set at initialize time and falling
+ * back to matching the returned plan code against the configured Elite plan
+ * codes. Used by both the verify endpoint and the renewal webhook so tier
+ * assignment stays consistent regardless of which path confirms payment.
+ */
+export function inferPaystackTier(transaction: {
+  metadata?: { tier?: string };
+  plan?: { plan_code: string };
+}): PaidPlan {
+  if (transaction.metadata?.tier === "elite") return "elite";
+  if (transaction.metadata?.tier === "standard") return "standard";
+
+  const elitePlanCodes = [
+    process.env.PAYSTACK_ELITE_MONTHLY_PLAN_CODE,
+    process.env.PAYSTACK_ELITE_ANNUAL_PLAN_CODE,
+  ];
+  return transaction.plan?.plan_code && elitePlanCodes.includes(transaction.plan.plan_code)
+    ? "elite"
+    : "standard";
+}
+
 export function getPaystackAmount(plan: PaidPlan, interval: BillingInterval) {
   const amount = Number.parseInt(
     process.env[`PAYSTACK_${plan.toUpperCase()}_${interval.toUpperCase()}_AMOUNT_CENTS`] ||
