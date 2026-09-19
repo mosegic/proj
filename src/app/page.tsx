@@ -72,8 +72,8 @@ export default function HomePage() {
         {/* Pricing Section */}
         <section className="mt-24 text-left">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900">Simple pricing for every restaurant</h2>
-            <p className="mt-3 text-gray-600">Start free, then upgrade when your business grows.</p>
+            <h2 className="text-3xl font-bold text-gray-900">Simple Pricing</h2>
+            <p className="mt-3 text-gray-600">Products and Services, Profit Focus, Scale.</p>
           </div>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
