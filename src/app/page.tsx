@@ -83,7 +83,7 @@ export default function HomePage() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Free Tier</p>
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">Free</h3>
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">KES 0</p>
-                <p className="mt-4 text-sm text-gray-600">Try MenuSaaS free for 30 days.</p>
+                <p className="mt-4 text-sm text-gray-600">Try MenuSaaS free for 30 days.A real SuperHero!</p>
               </div>
               <div className="mt-8">
                 <Link href="/register">
