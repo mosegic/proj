@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { ChangePasswordForm } from "@/components/dashboard/ChangePasswordForm";
 
 interface Restaurant {
   id: string;
@@ -17,6 +18,7 @@ interface Restaurant {
 
 export default function SettingsPage() {
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+  const [isDemo, setIsDemo] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -28,6 +30,7 @@ export default function SettingsPage() {
         if (data.user?.restaurants?.[0]) {
           setRestaurant(data.user.restaurants[0]);
         }
+        setIsDemo(Boolean(data.user?.isDemo));
         setLoading(false);
       });
   }, []);
@@ -111,6 +114,8 @@ export default function SettingsPage() {
         </p>
         <Button type="submit" loading={saving}>Save Settings</Button>
       </form>
+
+      {!isDemo && <ChangePasswordForm />}
     </div>
   );
 }

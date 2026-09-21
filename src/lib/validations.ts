@@ -59,6 +59,11 @@ export const restaurantUpdateSchema = z.object({
   isActive: z.boolean().optional(),
 });
 
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1, "Current password is required"),
+  newPassword: z.string().min(8, "New password must be at least 8 characters"),
+});
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()
