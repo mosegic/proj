@@ -104,11 +104,15 @@ export function TablesManager({ restaurantId }: { restaurantId: string }) {
             >
               <h3 className="font-semibold text-gray-900">{table.label}</h3>
               <p className="text-xs text-gray-500">Table #{table.tableNumber}</p>
-              <div className="flex justify-center">
+              <div className="flex justify-center bg-white p-3">
                 <img
-                  src={`/api/qr/${table.id}?format=png`}
+                  src={
+                    tier === "elite" && hasLogo
+                      ? `/api/qr/${table.id}?format=svg&branded=elite`
+                      : `/api/qr/${table.id}?format=png`
+                  }
                   alt={`QR code for ${table.label}`}
-                  className="w-40 h-40 rounded-lg border"
+                  className="h-40 w-40 bg-white"
                 />
               </div>
               <p className="text-xs text-gray-400 break-all">
