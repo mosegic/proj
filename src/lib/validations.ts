@@ -64,6 +64,15 @@ export const changePasswordSchema = z.object({
   newPassword: z.string().min(8, "New password must be at least 8 characters"),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1, "Reset token is required"),
+  newPassword: z.string().min(8, "New password must be at least 8 characters"),
+});
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()

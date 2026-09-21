@@ -1,6 +1,7 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
+import { createHash, randomBytes } from "node:crypto";
 
 function getJwtSecret() {
   const secret = process.env.JWT_SECRET;
@@ -83,4 +84,22 @@ export async function requireAuth(): Promise<SessionPayload> {
     throw new Error("Unauthorized");
   }
   return session;
+}
+
+const PASSWORD_RESET_TOKEN_BYTES = 32;
+export const PASSWORD_RESET_TOKEN_TTL_MS = 60 * 60 * 1000; // 1 hour
+
+/**
+ * Generates a password reset token pair: a random raw token to email to the
+ * user (usable only once, never stored) and its SHA-256 hash to persist in
+ * the database. This way a database leak alone cannot be used to reset
+ * accounts.
+ */
+export function generatePasswordResetToken(): { token: string; tokenHash: string } {
+  const token = randomBytes(PASSWORD_RESET_TOKEN_BYTES).toString("hex");
+  return { token, tokenHash: hashPasswordResetToken(token) };
+}
+
+export function hashPasswordResetToken(token: string): string {
+  return createHash("sha256").update(token).digest("hex");
 }

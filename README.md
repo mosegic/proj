@@ -61,7 +61,14 @@ PAYSTACK_STANDARD_MONTHLY_AMOUNT_CENTS="150000"
 PAYSTACK_STANDARD_ANNUAL_AMOUNT_CENTS="1500000"
 PAYSTACK_ELITE_MONTHLY_AMOUNT_CENTS="350000"
 PAYSTACK_ELITE_ANNUAL_AMOUNT_CENTS="3500000"
+RESEND_API_KEY="re_..."
+EMAIL_FROM="MenuSaaS <noreply@yourdomain.com>"
 ```
+
+`RESEND_API_KEY` powers "Forgot password" emails via [Resend](https://resend.com).
+`EMAIL_FROM` must be an address on a domain you've verified with Resend
+(falls back to Resend's shared `onboarding@resend.dev` sender for local
+testing, which only delivers to your own Resend account email).
 
 The `PAYSTACK_*_PLAN_CODE` values must reference plans that exist in your
 Paystack account, in the same mode (test vs live) as `PAYSTACK_SECRET_KEY`.
