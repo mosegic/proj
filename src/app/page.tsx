@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { Footer } from "@/components/layout/Footer";
+// Import Facebook icon from lucide-react (or substitute with your own icon pack)
+import { Facebook } from "lucide-react"; 
 
 export default function HomePage() {
   return (
@@ -13,7 +14,18 @@ export default function HomePage() {
           </div>
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
         </div>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-4">
+          {/* Your Facebook Link */}
+          <a 
+            href="https://www.facebook.com/profile.php?id=61594332673347" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-blue-600 transition-colors"
+            aria-label="Facebook Page"
+          >
+            <Facebook className="w-5 h-5" />
+          </a>
+          
           <Link href="/login">
             <Button variant="ghost">Sign In</Button>
           </Link>
@@ -100,7 +112,7 @@ export default function HomePage() {
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">
                   KES 1,500<span className="text-sm font-medium text-gray-500">/mo</span>
                 </p>
-                <p className="mt-4 text-sm text-gray-600">Essential tools for growing restaurants.</p>
+                <p className="mt-4 text-sm text-gray-600">Essential tools for growing restaurants. Limited 5 Categories 15 items</p>
               </div>
               <div className="mt-8">
                 <Link href="/register">
@@ -117,7 +129,7 @@ export default function HomePage() {
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">
                   KES 3,500<span className="text-sm font-medium text-gray-500">/mo</span>
                 </p>
-                <p className="mt-4 text-sm text-gray-600">Advanced tools for ambitious teams.</p>
+                <p className="mt-4 text-sm text-gray-600">Advanced tools for ambitious teams. Unlimited. QrCde has Logo.</p>
               </div>
               <div className="mt-8">
                 <Link href="/register">
@@ -128,8 +140,7 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-           {/* <Footer /> */}
-      
+      {/* <Footer /> */}
     </div>
   );
 }
