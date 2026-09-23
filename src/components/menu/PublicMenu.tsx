@@ -245,7 +245,7 @@ export function PublicMenu({
     </p>
     {/* Your Facebook Link */}
    <a
-  href="https://facebook.com"
+  href="https://www.facebook.com/profile.php?id=61594332673347"
   target="_blank"
   rel="noopener noreferrer"
   className="text-gray-500 hover:text-blue-600 transition-colors"
