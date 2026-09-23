@@ -74,7 +74,7 @@ export default function HomePage() {
         {/* Pricing Section */}
         <section className="mt-24 text-left">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900">Simple Pricing</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Sustainable Business Growth</h2>
             <p className="mt-3 text-gray-600">Products and Services, Profit Focus, Scale.</p>
           </div>
 
