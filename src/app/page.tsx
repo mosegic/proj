@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-// Import Facebook icon from lucide-react (or substitute with your own icon pack)
-import { Facebook } from "lucide-react"; 
+
 
 export default function HomePage() {
   return (
