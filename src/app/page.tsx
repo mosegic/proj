@@ -15,16 +15,7 @@ export default function HomePage() {
           <span className="font-bold text-xl text-gray-900">MenuSaaS</span>
         </div>
         <div className="flex items-center gap-4">
-          {/* Your Facebook Link */}
-          <a 
-            href="https://www.facebook.com/profile.php?id=61594332673347" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-gray-500 hover:text-blue-600 transition-colors"
-            aria-label="Facebook Page"
-          >
-            <Facebook className="w-5 h-5" />
-          </a>
+       
           
           <Link href="/login">
             <Button variant="ghost">Sign In</Button>
@@ -141,6 +132,26 @@ export default function HomePage() {
         </section>
       </main>
       {/* <Footer /> */}
+
+ <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 text-center">
+        <p className="text-xs text-gray-400">
+           onlinemenusaas@gmail.com MenuSaaS
+        </p>
+
+  {/* Your Facebook Link */}
+          <a 
+            href="https://www.facebook.com/profile.php?id=61594332673347" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-blue-600 transition-colors"
+            aria-label="Facebook Page"
+          >
+            <Facebook className="w-5 h-5" />
+          </a>
+   
+      </footer>
+ 
+      
     </div>
   );
 }
