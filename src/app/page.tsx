@@ -133,25 +133,24 @@ export default function HomePage() {
       </main>
       {/* <Footer /> */}
 
- <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 text-center">
-        <p className="text-xs text-gray-400">
-           onlinemenusaas@gmail.com MenuSaaS
-        </p>
+<footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3">
+  <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-center gap-3">
+    <p className="text-xs text-gray-400">
+      onlinemenusaas@gmail.com MenuSaaS
+    </p>
+    {/* Your Facebook Link */}
+    <a
+      href="https://www.facebook.com/profile.php?id=61594332673347"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-gray-500 hover:text-blue-600 transition-colors"
+      aria-label="Facebook Page"
+    >
+      <Facebook className="w-5 h-5" />
+    </a>
+  </div>
+</footer>
 
-  {/* Your Facebook Link */}
-          <a 
-            href="https://www.facebook.com/profile.php?id=61594332673347" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-gray-500 hover:text-blue-600 transition-colors"
-            aria-label="Facebook Page"
-          >
-            <Facebook className="w-5 h-5" />
-          </a>
-   
-      </footer>
- 
-      
     </div>
   );
 }
