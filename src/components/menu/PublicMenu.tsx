@@ -241,7 +241,7 @@ export function PublicMenu({
 <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3">
   <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-center gap-3">
     <p className="text-xs text-gray-400">
-      onlinemenusaas@gmail.com MenuSaaS
+      onlinemenusaas@gmail.com
     </p>
     {/* Your Facebook Link */}
    <a
