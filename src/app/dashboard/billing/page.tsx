@@ -207,8 +207,8 @@ export default function BillingPage() {
               interval={billingInterval}
               features={[
                 "Everything in Standard",
-                "Multi-location access",
-                "Advanced sales reports",
+                "Elite QrCode with Your Logo",
+                "Advanced Unlimited number of Categories and MenuItems",
                 "Dedicated account support",
               ]}
               highlighted
