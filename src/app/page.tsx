@@ -85,7 +85,7 @@ export default function HomePage() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Free Tier</p>
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">Free</h3>
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">KES 0</p>
-                <p className="mt-4 text-sm text-gray-600">Try MenuSaaS free for 30 days. A real SuperHero!</p>
+                <p className="mt-4 text-sm text-gray-600">Try MenuSaaS free for 30 days.</p>
               </div>
               <div className="mt-8">
                 <Link href="/register">
@@ -102,7 +102,7 @@ export default function HomePage() {
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">
                   KES 1,500<span className="text-sm font-medium text-gray-500">/mo</span>
                 </p>
-                <p className="mt-4 text-sm text-gray-600">Essential tools for growing restaurants. Limited 5 Categories 15 items</p>
+                <p className="mt-4 text-sm text-gray-600">Essential tools for growing restaurants.</p>
               </div>
               <div className="mt-8">
                 <Link href="/register">
@@ -119,7 +119,7 @@ export default function HomePage() {
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">
                   KES 3,500<span className="text-sm font-medium text-gray-500">/mo</span>
                 </p>
-                <p className="mt-4 text-sm text-gray-600">Advanced tools for ambitious teams. Unlimited. QrCde has Logo.</p>
+                <p className="mt-4 text-sm text-gray-600">Advanced tools for ambitious teams.</p>
               </div>
               <div className="mt-8">
                 <Link href="/register">
