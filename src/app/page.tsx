@@ -100,7 +100,7 @@ export default function HomePage() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Business Standard</p>
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">Standard</h3>
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">
-                  KES 1,500<span className="text-sm font-medium text-gray-500">/mo</span>
+                  KES 700<span className="text-sm font-medium text-gray-500">/mo</span>
                 </p>
                 <p className="mt-4 text-sm text-gray-600">Essential tools for growing restaurants.</p>
               </div>
@@ -117,7 +117,7 @@ export default function HomePage() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">Business Elite</p>
                 <h3 className="mt-2 text-2xl font-bold text-gray-900">Elite</h3>
                 <p className="mt-1 text-3xl font-extrabold text-gray-900">
-                  KES 3,500<span className="text-sm font-medium text-gray-500">/mo</span>
+                  KES 2,500<span className="text-sm font-medium text-gray-500">/mo</span>
                 </p>
                 <p className="mt-4 text-sm text-gray-600">Advanced tools for ambitious teams.</p>
               </div>
