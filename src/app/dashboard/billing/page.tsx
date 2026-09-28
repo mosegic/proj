@@ -189,7 +189,7 @@ export default function BillingPage() {
             <PlanCard
               name="Business Standard"
               description="Perfect for growing restaurants and essential features."
-              price={billingInterval === "monthly" ? "KES 1,500" : "KES 15,000"}
+              price={billingInterval === "monthly" ? "KES 700" : "KES 7,000"}
               interval={billingInterval}
               features={[
                 "Full digital menu builder",
@@ -203,7 +203,7 @@ export default function BillingPage() {
             <PlanCard
               name="Business Elite"
               description="Advanced multi-location analytics and customized loyalty tools."
-              price={billingInterval === "monthly" ? "KES 3,500" : "KES 35,000"}
+              price={billingInterval === "monthly" ? "KES 2,500" : "KES 25,000"}
               interval={billingInterval}
               features={[
                 "Everything in Standard",
