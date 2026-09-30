@@ -221,31 +221,36 @@ export function PublicMenu({
                             </div>
                           </div>
 
+                          {/* Options/Badges Footnote Section (REFACTORED FOR TURBOPACK COMPLIANCE) */}
                           <div className="p-3 pt-0 flex flex-wrap items-center gap-1">
-                            {item.isSoldOut && (
+                            {item.isSoldOut ? (
                               <span className="inline-flex text-[9px] bg-red-50 text-red-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider border border-red-200/50">
                                 Sold Out
                               </span>
-                            )}
-                            {!item.isAvailable && !item.isSoldOut && (
+) : null}
+{!item.isAvailable && !item.isSoldOut ? (
+
 Unavailable
 
-)}
-{item.options && item.options.length > 0 && (
+) : null}
+{item.options && item.options.length > 0 ? (
 
-{item.options.map((opt) => (
+{item.options.map((opt) => {
+const showDelta = opt.priceDelta && getNumericDelta(opt.priceDelta) > 0;
+return (
 
 {opt.name}
-{opt.priceDelta && getNumericDelta(opt.priceDelta) > 0 && (
+{showDelta ? (
 
 {" +"}
 
 
-)}
+) : null}
 
-))}
+);
+})}
 
-)}
+) : null}
 
 
 );
