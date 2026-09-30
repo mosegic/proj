@@ -182,48 +182,86 @@ export function PublicMenu({
                   </div>
 
                   {/* CHANGED HERE: Added grid grid-cols-1 xs:grid-cols-2 gap-3 or gap-4 for side-by-side presentation */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-50/60 p-3 sm:p-4">
-                    {category.items.map((item) => {
-                      const itemTranslation = item.translations?.find((t) => t.languageCode === languageCode);
-                      const itemName = itemTranslation?.name || item.name;
-                      const itemDesc = itemTranslation?.description || item.description;
+                  /* ... Keep the top rest of the component identical up to the category mapping loop ... */
 
-                      return (
-                        <article
-                          key={item.id}
-                          className={`bg-white rounded-xl shadow-xs overflow-hidden border border-gray-100 transition-opacity flex flex-col justify-between ${
-                            item.isSoldOut ? "opacity-60" : ""
-                          }`}
-                        >
-                          <div className="flex flex-col">
-                            {/* Top Box: Image moved to top for card layouts */}
-                            {item.imageUrl && (
-                              <ImageWithPlaceholder
-                                src={item.imageUrl}
-                                alt={itemName}
-                                containerClassName="w-full aspect-video overflow-hidden bg-gray-50 flex items-center justify-center border-b border-gray-100"
-                                imageClassName="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.01]"
-                              />
-                            )}
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-50/60 p-3 sm:p-4">
+  {category.items.map((item) => {
+    const itemTranslation = item.translations?.find((t) => t.languageCode === languageCode);
+    const itemName = itemTranslation?.name || item.name;
+    const itemDesc = itemTranslation?.description || item.description;
 
-                            {/* Text Body */}
-                            <div className="p-3 flex flex-col gap-1.5">
-                              <div className="flex justify-between items-start gap-2">
-                                <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">
-                                  {itemName}
-                                </h3>
-                                <span className="font-bold text-sm whitespace-nowrap" style={{ color: theme }}>
-                                  <PriceDisplay price={item.price} />
-                                </span>
-                              </div>
+    return (
+      <article
+        key={item.id}
+        className={`bg-white rounded-xl shadow-xs overflow-hidden border border-gray-100 transition-opacity flex flex-col justify-between ${
+          item.isSoldOut ? "opacity-60" : ""
+        }`}
+      >
+        <div className="flex flex-col">
+          {/* Top Box: Image */}
+          {item.imageUrl && (
+            <ImageWithPlaceholder
+              src={item.imageUrl}
+              alt={itemName}
+              containerClassName="w-full aspect-video overflow-hidden bg-gray-50 flex items-center justify-center border-b border-gray-100"
+              imageClassName="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.01]"
+            />
+          )}
 
-                              {itemDesc && (
-                                <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
-                                  {itemDesc}
-                                </p>
-                              )}
-                            </div>
-                          </div>
+          {/* Text Body */}
+          <div className="p-3 flex flex-col gap-1.5">
+            <div className="flex justify-between items-start gap-2">
+              <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">
+                {itemName}
+              </h3>
+              <span className="font-bold text-sm whitespace-nowrap" style={{ color: theme }}>
+                <PriceDisplay price={item.price} />
+              </span>
+            </div>
+
+            {itemDesc && (
+              <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                {itemDesc}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Options/Badges Footnote Section (FIXED HERE) */}
+        <div className="p-3 pt-0 flex flex-wrap items-center gap-1">
+          {item.isSoldOut && (
+            <span className="inline-flex text-[9px] bg-red-50 text-red-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider border border-red-200/50">
+              Sold Out
+            </span>
+          )}
+          {!item.isAvailable && !item.isSoldOut && (
+            <span className="inline-flex text-[9px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider border border-amber-200/50">
+              Unavailable
+            </span>
+          )}
+          {item.options && item.options.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {item.options.map((opt) => (
+                <span
+                  key={opt.id}
+                  className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded border border-gray-200/40"
+                >
+                  {opt.name}
+                  {opt.priceDelta && getNumericDelta(opt.priceDelta) > 0 && (
+                    <> +<PriceDisplay price={opt.priceDelta} /></>
+                  )}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </article>
+    );
+  })}
+</div>
+
+/* ... Keep the footer and component closing structural tags identical ... */
+
 
                           {/* Options/Badges Footnote Section */}
                           <div className="p-3 pt-0 flex flex-wrap items-center gap-1">
