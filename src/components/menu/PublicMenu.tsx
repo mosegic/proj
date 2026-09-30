@@ -186,6 +186,32 @@ export function PublicMenu({
                       const itemName = itemTranslation?.name || item.name;
                       const itemDesc = itemTranslation?.description || item.description;
 
+                      // Pre-render options here to isolate mapping logic out of nested JSX
+                      let optionsContent = null;
+                      if (item.options && item.options.length > 0) {
+                        optionsContent = (
+                          <div className="flex flex-wrap gap-1">
+                            {item.options.map((opt) => {
+                              const showDelta = opt.priceDelta && getNumericDelta(opt.priceDelta) > 0;
+                              return (
+                                <span
+                                  key={opt.id}
+                                  className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded border border-gray-200/40"
+                                >
+                                  <span>{opt.name}</span>
+                                  {showDelta && (
+                                    <span className="font-medium text-gray-900">
+                                      {" +"}
+                                      <PriceDisplay price={opt.priceDelta} />
+                                    </span>
+                                  )}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        );
+                      }
+
                       return (
                         <article
                           key={item.id}
@@ -204,53 +230,28 @@ export function PublicMenu({
                             )}
 
                             <div className="p-3 flex flex-col gap-1.5">
-                              <div className="flex justify-between items-start gap-2">
-                                <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">
-                                  {itemName}
-                                </h3>
-                                <span className="font-bold text-sm whitespace-nowrap" style={{ color: theme }}>
-                                  <PriceDisplay price={item.price} />
-                                </span>
-                              </div>
+{itemName}
 
-                              {itemDesc && (
-                                <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
-                                  {itemDesc}
-                                </p>
-                              )}
-                            </div>
-                          </div>
+<span className="font-bold text-sm whitespace-nowrap" style={{ color: theme }}>
 
-                          {/* Options/Badges Footnote Section (REFACTORED FOR TURBOPACK COMPLIANCE) */}
-                          <div className="p-3 pt-0 flex flex-wrap items-center gap-1">
-                            {item.isSoldOut ? (
-                              <span className="inline-flex text-[9px] bg-red-50 text-red-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider border border-red-200/50">
-                                Sold Out
-                              </span>
-) : null}
-{!item.isAvailable && !item.isSoldOut ? (
+
+{itemDesc && (
+
+{itemDesc}
+
+)}
+
+{item.isSoldOut && (
+
+Sold Out
+
+)}
+{!item.isAvailable && !item.isSoldOut && (
 
 Unavailable
 
-) : null}
-{item.options && item.options.length > 0 ? (
-
-{item.options.map((opt) => {
-const showDelta = opt.priceDelta && getNumericDelta(opt.priceDelta) > 0;
-return (
-
-{opt.name}
-{showDelta ? (
-
-{" +"}
-
-
-) : null}
-
-);
-})}
-
-) : null}
+)}
+{optionsContent}
 
 
 );
