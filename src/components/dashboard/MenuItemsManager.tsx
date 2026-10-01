@@ -400,10 +400,11 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
           {items.map((item) => (
             <div
               key={item.id}
-              className={`flex gap-4 bg-white border rounded-lg p-4 ${
+              className={`flex flex-col sm:flex-row gap-4 bg-white border rounded-lg p-4 ${
                 item.isSoldOut ? "opacity-60 border-red-200" : "border-gray-200"
               }`}
             >
+              <div className="flex gap-4 min-w-0 flex-1">
               {item.imageUrl && editingItemId !== item.id && (
                 <img
                   src={item.imageUrl}
@@ -513,7 +514,7 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
                           <p className="text-sm text-gray-500">No options yet.</p>
                         )}
                         {item.options.map((option, index) => (
-                          <div key={option.id} className="flex items-center justify-between gap-3 border-b border-gray-200 pb-2">
+                          <div key={option.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 border-b border-gray-200 pb-2">
                             {editingOptionId === option.id ? (
                               <form
                                 className="flex flex-1 flex-wrap items-end gap-2"
@@ -554,7 +555,7 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
                                     </span>
                                   )}
                                 </p>
-                                <div className="flex flex-wrap justify-end gap-1">
+                                <div className="flex flex-wrap gap-1 sm:justify-end">
                                   <Button
                                     size="sm"
                                     variant="ghost"
@@ -628,8 +629,9 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
                   </>
                 )}
               </div>
+              </div>
               {editingItemId !== item.id && (
-                <div className="flex flex-col gap-1 flex-shrink-0">
+                <div className="flex flex-row flex-wrap gap-1 sm:flex-col sm:flex-shrink-0">
                   {(() => {
                     const siblings = items.filter(({ category }) => category.id === item.category.id);
                     const index = siblings.findIndex(({ id }) => id === item.id);
