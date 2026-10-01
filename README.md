@@ -5,7 +5,7 @@ Multi-tenant SaaS platform for restaurants to manage digital menus, catalog data
 ## Features
 
 - **Restaurant onboarding** — Register with business name, logo, color theme, and custom URL slug
-- **Merchant dashboard** — CRUD for categories, menu items, pricing, sold-out status, and visibility
+- **Merchant dashboard** — Edit and reorder categories, menu items, and menu item options, with pricing, sold-out status, and visibility controls
 - **Public mobile menu** — Lightweight, mobile-first menu pages for customers
 - **QR code generation** — Branded PNG/SVG QR codes linking to table-specific menu URLs
 - **Subscriptions** — One-month free trial, Business Standard, and Business Elite plans
@@ -106,6 +106,9 @@ Run database setup separately from the application build. The production build
 only generates Prisma Client and builds Next.js; it does not change the schema
 or require the database to be reachable during a Vercel build.
 
+After updating the Prisma schema in an existing local database, run
+`npm run db:push` to add the menu-option ordering field.
+
 ### 3. Run the dev server
 
 ```bash
@@ -145,6 +148,11 @@ Open [http://localhost:3000](http://localhost:3000).
 - `GET /api/categories?restaurantId=` — List categories
 - `POST /api/menu-items` — Create menu item
 - `PATCH /api/menu-items/[id]` — Update item (price, sold-out, visibility)
+- `PATCH /api/categories/reorder` — Save category order
+- `PATCH /api/menu-items/reorder` — Save item order within a category
+- `POST /api/menu-items/[id]/options` — Add a menu item option
+- `PATCH /api/menu-items/[id]/options` — Save option order
+- `PATCH|DELETE /api/menu-items/[id]/options/[optionId]` — Edit or delete an option
 - `GET /api/qr/[tableId]` — Generate QR code (PNG or SVG)
 - `POST /api/paystack/initialize` — Start a Paystack subscription checkout
 - `GET /api/paystack/verify/[reference]` — Verify a completed payment

@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     },
     include: {
       category: { select: { id: true, name: true } },
-      options: true,
+      options: { orderBy: { sortOrder: "asc" } },
     },
     orderBy: [{ category: { sortOrder: "asc" } }, { sortOrder: "asc" }],
   });
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       categoryId: parsed.data.categoryId,
       sortOrder: parsed.data.sortOrder ?? (maxOrder._max.sortOrder ?? 0) + 1,
     },
-    include: { options: true },
+    include: { options: { orderBy: { sortOrder: "asc" } } },
   });
 
   return jsonSuccess({ item }, 201);

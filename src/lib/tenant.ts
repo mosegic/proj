@@ -35,7 +35,7 @@ export async function getRestaurantBySlug(slug: string, languageCode?: string) {
             where: { isVisible: true },
             orderBy: { sortOrder: "asc" },
             include: {
-              options: true,
+              options: { orderBy: { sortOrder: "asc" } },
               translations: languageCode
                 ? { where: { languageCode } }
                 : undefined,

@@ -44,6 +44,26 @@ export const menuItemSchema = z.object({
   categoryId: z.string(),
 });
 
+export const menuItemOptionSchema = z.object({
+  name: z.string().min(1),
+  priceDelta: z.number().nonnegative(),
+  sortOrder: z.number().int().optional(),
+});
+
+export const reorderCategoriesSchema = z.object({
+  restaurantId: z.string().min(1),
+  categoryIds: z.array(z.string().min(1)).min(1),
+});
+
+export const reorderMenuItemsSchema = z.object({
+  categoryId: z.string().min(1),
+  itemIds: z.array(z.string().min(1)).min(1),
+});
+
+export const reorderMenuItemOptionsSchema = z.object({
+  optionIds: z.array(z.string().min(1)).min(1),
+});
+
 export const tableSchema = z.object({
   label: z.string().min(1),
   tableNumber: z.number().int().positive(),

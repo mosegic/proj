@@ -26,6 +26,16 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     return jsonError(parsed.error.issues[0]?.message || "Validation failed");
   }
 
+  if (parsed.data.categoryId && parsed.data.categoryId !== item.categoryId) {
+    const destination = await db.category.findFirst({
+      where: {
+        id: parsed.data.categoryId,
+        restaurantId: item.category.restaurantId,
+      },
+    });
+    if (!destination) return jsonError("Category not found", 404);
+  }
+
   const updated = await db.menuItem.update({
     where: { id },
     data: {
@@ -33,7 +43,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       description: parsed.data.description ?? undefined,
       imageUrl: parsed.data.imageUrl ?? undefined,
     },
-    include: { options: true },
+    include: { options: { orderBy: { sortOrder: "asc" } } },
   });
 
   return jsonSuccess({ item: updated });

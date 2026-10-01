@@ -23,7 +23,7 @@ export async function GET(
             where: { isVisible: true },
             orderBy: { sortOrder: "asc" },
             include: {
-              options: true,
+              options: { orderBy: { sortOrder: "asc" } },
               translations: languageCode
                 ? { where: { languageCode } }
                 : undefined,
