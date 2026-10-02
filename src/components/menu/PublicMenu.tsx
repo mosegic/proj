@@ -60,7 +60,7 @@ export function PublicMenu({
         className="sticky top-0 z-10 shadow-sm"
         style={{ backgroundColor: theme }}
       >
-        <div className="max-w-lg mx-auto px-4 py-6 text-white">
+        <div className="max-w-lg sm:max-w-4xl mx-auto px-4 py-6 text-white">
           <div className="flex items-center gap-3">
             {restaurant.logoUrl ? (
               <ImageWithPlaceholder
@@ -130,7 +130,7 @@ export function PublicMenu({
         </div>
       </header>
 
-<main className="max-w-lg mx-auto px-4 py-7 pb-20 space-y-6">
+<main className="max-w-lg sm:max-w-4xl mx-auto px-4 py-7 pb-20 space-y-6">
   {restaurant.categories.length === 0 ? (
     <p className="text-center text-gray-500 py-12">Menu coming soon...</p>
   ) : (
@@ -158,7 +158,7 @@ export function PublicMenu({
             </p>
           )}
         </div>
-        <div className="space-y-3 bg-gray-50/70 p-3 sm:p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-gray-50/70 p-3 sm:p-4">
           {category.items.map((item) => {
             const itemTranslation = item.translations?.[0];
             return (
