@@ -209,11 +209,11 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
           No categories yet. Add your first category to get started.
         </p>
       ) : (
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {categories.map((category, index) => (
             <div
               key={category.id}
-              className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 bg-white border border-gray-200 rounded-lg p-4"
+              className="flex flex-col justify-between gap-3 bg-white border border-gray-200 rounded-lg p-4"
             >
               <div className="flex-1 min-w-0">
                 {editingId === category.id ? (
@@ -256,7 +256,7 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
                 )}
               </div>
               {editingId !== category.id && (
-                <div className="flex flex-wrap gap-2 sm:justify-end">
+                <div className="flex flex-wrap gap-2">
                   <Button
                     size="sm"
                     variant="ghost"

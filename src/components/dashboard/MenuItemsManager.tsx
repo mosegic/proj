@@ -396,11 +396,11 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
       {items.length === 0 ? (
         <p className="text-gray-500 text-center py-8">No menu items yet.</p>
       ) : (
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {items.map((item) => (
             <div
               key={item.id}
-              className={`flex flex-col sm:flex-row gap-4 bg-white border rounded-lg p-4 ${
+              className={`flex flex-col gap-4 bg-white border rounded-lg p-4 ${
                 item.isSoldOut ? "opacity-60 border-red-200" : "border-gray-200"
               }`}
             >
@@ -631,7 +631,7 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
               </div>
               </div>
               {editingItemId !== item.id && (
-                <div className="flex flex-row flex-wrap gap-1 sm:flex-col sm:flex-shrink-0">
+                <div className="flex flex-row flex-wrap gap-1">
                   {(() => {
                     const siblings = items.filter(({ category }) => category.id === item.category.id);
                     const index = siblings.findIndex(({ id }) => id === item.id);
