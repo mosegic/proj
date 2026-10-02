@@ -256,7 +256,7 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
                 )}
               </div>
               {editingId !== category.id && (
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   <Button
                     size="sm"
                     variant="ghost"

@@ -631,7 +631,7 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
               </div>
               </div>
               {editingItemId !== item.id && (
-                <div className="flex flex-row flex-wrap gap-1">
+                <div className="grid grid-cols-3 gap-1">
                   {(() => {
                     const siblings = items.filter(({ category }) => category.id === item.category.id);
                     const index = siblings.findIndex(({ id }) => id === item.id);
