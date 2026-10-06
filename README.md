@@ -66,6 +66,8 @@ EMAIL_FROM="MenuSaaS <noreply@yourdomain.com>"
 ```
 
 `RESEND_API_KEY` powers "Forgot password" emails via [Resend](https://resend.com).
+Set `NEXT_PUBLIC_APP_URL` to the canonical application URL (HTTPS in production);
+password-reset links are generated only from this configured URL.
 `EMAIL_FROM` must be an address on a domain you've verified with Resend
 (falls back to Resend's shared `onboarding@resend.dev` sender for local
 testing, which only delivers to your own Resend account email).

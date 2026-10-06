@@ -66,12 +66,37 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   });
 }
 
-async function getLogoDataUri(logoUrl: string) {
-  if (logoUrl.startsWith("data:image/")) return logoUrl;
-  const response = await fetch(logoUrl);
-  if (!response.ok) return null;
-  const contentType = response.headers.get("content-type") || "image/png";
-  if (!contentType.startsWith("image/")) return null;
-  const bytes = Buffer.from(await response.arrayBuffer()).toString("base64");
-  return `data:${contentType};base64,${bytes}`;
+function getLogoDataUri(logoUrl: string) {
+  // Never fetch user-controlled URLs from the server; only embed bounded raster data.
+  const match = logoUrl.match(
+    /^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/]+={0,2})$/i
+  );
+  if (!match) return null;
+
+  const format = match[1].toLowerCase();
+  const encoded = match[2];
+  const bytes = Buffer.from(encoded, "base64");
+  if (
+    bytes.length === 0 ||
+    bytes.length > 256 * 1024 ||
+    bytes.toString("base64") !== encoded
+  ) {
+    return null;
+  }
+
+  const validSignature =
+    (format === "png" &&
+      bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) ||
+    (format === "jpeg" &&
+      bytes[0] === 0xff &&
+      bytes[1] === 0xd8 &&
+      bytes[bytes.length - 2] === 0xff &&
+      bytes[bytes.length - 1] === 0xd9) ||
+    (format === "webp" &&
+      bytes.toString("ascii", 0, 4) === "RIFF" &&
+      bytes.toString("ascii", 8, 12) === "WEBP");
+
+  return validSignature
+    ? `data:image/${format};base64,${encoded}`
+    : null;
 }

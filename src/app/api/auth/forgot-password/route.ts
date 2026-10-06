@@ -21,6 +21,27 @@ export async function POST(request: NextRequest) {
   }
   const { email } = parsed.data;
 
+  const configuredAppUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
+  if (!configuredAppUrl) {
+    return jsonError("Password reset is not configured", 503);
+  }
+
+  let appUrl: URL;
+  try {
+    appUrl = new URL(configuredAppUrl);
+  } catch {
+    return jsonError("Password reset is not configured", 503);
+  }
+  if (
+    !["http:", "https:"].includes(appUrl.protocol) ||
+    !appUrl.hostname ||
+    appUrl.username ||
+    appUrl.password ||
+    (process.env.NODE_ENV === "production" && appUrl.protocol !== "https:")
+  ) {
+    return jsonError("Password reset is not configured", 503);
+  }
+
   const user = await db.user.findUnique({ where: { email } });
 
   if (user && !user.isDemo) {
@@ -33,13 +54,11 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const resetUrl = new URL(
-      `/reset-password?token=${token}`,
-      process.env.NEXT_PUBLIC_APP_URL || request.url,
-    ).toString();
+    const resetUrl = new URL("/reset-password", appUrl.origin);
+    resetUrl.searchParams.set("token", token);
 
     try {
-      await sendPasswordResetEmail(user.email, resetUrl);
+      await sendPasswordResetEmail(user.email, resetUrl.toString());
     } catch (error) {
       // Log for operational visibility, but still return the generic
       // response below — surfacing send failures here would let an
