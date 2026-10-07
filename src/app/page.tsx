@@ -26,7 +26,7 @@ export default function HomePage() {
       <main className="max-w-6xl mx-auto px-4 py-20 text-center">
         {/* Hero Section */}
         <h1 className="text-4xl sm:text-6xl font-bold text-gray-900 leading-tight">
-          Online-Menu <br />
+          Digital Online-Menu <br />
           <span className="text-blue-600">Modern Restaurant</span>
         </h1>
         <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
