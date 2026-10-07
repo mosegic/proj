@@ -80,6 +80,7 @@ export async function POST(request: NextRequest) {
     userId: user.id,
     email: user.email,
     name: user.name,
+    sessionVersion: user.sessionVersion,
     isDemo,
   });
   await setSessionCookie(token);

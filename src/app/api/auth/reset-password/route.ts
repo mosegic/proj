@@ -1,6 +1,10 @@
 import { NextRequest } from "next/server";
 import db from "@/lib/db";
-import { hashPassword, hashPasswordResetToken } from "@/lib/auth";
+import {
+  clearSessionCookie,
+  hashPassword,
+  hashPasswordResetToken,
+} from "@/lib/auth";
 import { resetPasswordSchema } from "@/lib/validations";
 import { jsonError, jsonSuccess, parseBody } from "@/lib/api-utils";
 
@@ -33,7 +37,7 @@ export async function POST(request: NextRequest) {
   await db.$transaction([
     db.user.update({
       where: { id: resetToken.userId },
-      data: { passwordHash },
+      data: { passwordHash, sessionVersion: { increment: 1 } },
     }),
     db.passwordResetToken.update({
       where: { id: resetToken.id },
@@ -47,5 +51,6 @@ export async function POST(request: NextRequest) {
     }),
   ]);
 
+  await clearSessionCookie();
   return jsonSuccess({ email: resetToken.user.email });
 }

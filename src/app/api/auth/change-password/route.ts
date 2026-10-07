@@ -1,6 +1,12 @@
 import { NextRequest } from "next/server";
 import db from "@/lib/db";
-import { getSession, hashPassword, verifyPassword } from "@/lib/auth";
+import {
+  createSession,
+  getSession,
+  hashPassword,
+  setSessionCookie,
+  verifyPassword,
+} from "@/lib/auth";
 import { changePasswordSchema } from "@/lib/validations";
 import { jsonError, jsonSuccess, parseBody } from "@/lib/api-utils";
 
@@ -35,10 +41,19 @@ export async function POST(request: NextRequest) {
   }
 
   const passwordHash = await hashPassword(newPassword);
-  await db.user.update({
+  const updatedUser = await db.user.update({
     where: { id: user.id },
-    data: { passwordHash },
+    data: { passwordHash, sessionVersion: { increment: 1 } },
   });
+
+  const token = await createSession({
+    userId: updatedUser.id,
+    email: updatedUser.email,
+    name: updatedUser.name,
+    sessionVersion: updatedUser.sessionVersion,
+    isDemo: updatedUser.isDemo,
+  });
+  await setSessionCookie(token);
 
   return jsonSuccess({ success: true });
 }

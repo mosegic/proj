@@ -2,6 +2,7 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
 import { createHash, randomBytes } from "node:crypto";
+import db from "@/lib/db";
 
 function getJwtSecret() {
   const secret = process.env.JWT_SECRET;
@@ -22,6 +23,7 @@ export interface SessionPayload {
   userId: string;
   email: string;
   name: string;
+  sessionVersion: number;
   isDemo?: boolean;
 }
 
@@ -39,6 +41,7 @@ export async function verifyPassword(
 export async function createSession(payload: SessionPayload): Promise<string> {
   return new SignJWT({ ...payload })
     .setProtectedHeader({ alg: "HS256" })
+    .setSubject(payload.userId)
     .setIssuedAt()
     .setExpirationTime(`${SESSION_DURATION}s`)
     .sign(getJwtSecret());
@@ -47,12 +50,36 @@ export async function createSession(payload: SessionPayload): Promise<string> {
 export async function verifySession(
   token: string
 ): Promise<SessionPayload | null> {
+  let payload;
   try {
-    const { payload } = await jwtVerify(token, getJwtSecret());
-    return payload as unknown as SessionPayload;
+    ({ payload } = await jwtVerify(token, getJwtSecret()));
   } catch {
     return null;
   }
+
+  if (
+    typeof payload.sub !== "string" ||
+    typeof payload.email !== "string" ||
+    typeof payload.name !== "string" ||
+    typeof payload.sessionVersion !== "number" ||
+    !Number.isSafeInteger(payload.sessionVersion)
+  ) {
+    return null;
+  }
+
+  const user = await db.user.findUnique({
+    where: { id: payload.sub },
+    select: { sessionVersion: true },
+  });
+  if (!user || user.sessionVersion !== payload.sessionVersion) return null;
+
+  return {
+    userId: payload.sub,
+    email: payload.email,
+    name: payload.name,
+    sessionVersion: payload.sessionVersion,
+    ...(typeof payload.isDemo === "boolean" ? { isDemo: payload.isDemo } : {}),
+  };
 }
 
 export async function getSession(): Promise<SessionPayload | null> {

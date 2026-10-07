@@ -84,9 +84,14 @@ codes to paste into `.env.local` and into Vercel's Production environment
 variables. Run it once per Paystack mode you use (test and, separately, live).
 
 `ADMIN_EMAIL` protects the `/admin` testing panel. It must contain the exact
-email address of the administrator's authenticated account. The panel creates
-accounts with `isDemo=true`, so they inherit Elite entitlements without going
-through Paystack. Generated passwords are displayed only once.
+email address of an administrator account provisioned through a trusted
+administrative process; public registration rejects this address. The panel
+creates accounts with `isDemo=true`, so they inherit Elite entitlements
+without going through Paystack. Generated passwords are displayed only once.
+
+Apply schema changes with `npm run db:push` and regenerate the Prisma Client
+with `npm run db:generate`. Password changes invalidate existing sessions on
+other devices; the current device remains signed in after a password change.
 
 Subscription pricing is configured as:
 

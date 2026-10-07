@@ -8,6 +8,7 @@ import {
 } from "@/lib/auth";
 import { registerSchema } from "@/lib/validations";
 import { jsonError, jsonSuccess, parseBody } from "@/lib/api-utils";
+import { isAdminEmail } from "@/lib/admin";
 
 export async function POST(request: NextRequest) {
   const body = await parseBody<unknown>(request);
@@ -36,6 +37,10 @@ export async function POST(request: NextRequest) {
     accentColor,
     logoUrl,
   } = parsed.data;
+
+  if (isAdminEmail(email)) {
+    return jsonError("This email cannot be registered publicly", 403);
+  }
 
   const existingUser = await db.user.findUnique({ where: { email } });
   if (existingUser) {
@@ -95,6 +100,7 @@ export async function POST(request: NextRequest) {
     userId: user.id,
     email: user.email,
     name: user.name,
+    sessionVersion: user.sessionVersion,
   });
   await setSessionCookie(token);
 
