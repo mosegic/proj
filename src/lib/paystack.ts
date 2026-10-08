@@ -54,12 +54,12 @@ const paidPlanDefaults: Record<
   Record<BillingInterval, { amount: number; envKey: string }>
 > = {
   standard: {
-    monthly: { amount: 150000, envKey: "PAYSTACK_STANDARD_MONTHLY_PLAN_CODE" },
-    annually: { amount: 1500000, envKey: "PAYSTACK_STANDARD_ANNUAL_PLAN_CODE" },
+    monthly: { amount: 70000, envKey: "PAYSTACK_STANDARD_MONTHLY_PLAN_CODE" },
+    annually: { amount: 700000, envKey: "PAYSTACK_STANDARD_ANNUAL_PLAN_CODE" },
   },
   elite: {
-    monthly: { amount: 350000, envKey: "PAYSTACK_ELITE_MONTHLY_PLAN_CODE" },
-    annually: { amount: 3500000, envKey: "PAYSTACK_ELITE_ANNUAL_PLAN_CODE" },
+    monthly: { amount: 250000, envKey: "PAYSTACK_ELITE_MONTHLY_PLAN_CODE" },
+    annually: { amount: 2500000, envKey: "PAYSTACK_ELITE_ANNUAL_PLAN_CODE" },
   },
 };
 

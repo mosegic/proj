@@ -57,10 +57,10 @@ PAYSTACK_STANDARD_MONTHLY_PLAN_CODE="PLN_..."
 PAYSTACK_STANDARD_ANNUAL_PLAN_CODE="PLN_..."
 PAYSTACK_ELITE_MONTHLY_PLAN_CODE="PLN_..."
 PAYSTACK_ELITE_ANNUAL_PLAN_CODE="PLN_..."
-PAYSTACK_STANDARD_MONTHLY_AMOUNT_CENTS="150000"
-PAYSTACK_STANDARD_ANNUAL_AMOUNT_CENTS="1500000"
-PAYSTACK_ELITE_MONTHLY_AMOUNT_CENTS="350000"
-PAYSTACK_ELITE_ANNUAL_AMOUNT_CENTS="3500000"
+PAYSTACK_STANDARD_MONTHLY_AMOUNT_CENTS="70000"
+PAYSTACK_STANDARD_ANNUAL_AMOUNT_CENTS="700000"
+PAYSTACK_ELITE_MONTHLY_AMOUNT_CENTS="250000"
+PAYSTACK_ELITE_ANNUAL_AMOUNT_CENTS="2500000"
 RESEND_API_KEY="re_..."
 EMAIL_FROM="MenuSaaS <noreply@yourdomain.com>"
 ```
@@ -98,10 +98,10 @@ Subscription pricing is configured as:
 | Plan | Price |
 |------|-------|
 | Free | 1 month trial |
-| Business Standard | KES 1,500/month |
-| Business Elite | KES 3,500/month |
-| Business Standard | KES 15,000/year |
-| Business Elite | KES 35,000/year |
+| Business Standard | KES 700/month |
+| Business Elite | KES 2,500/month |
+| Business Standard | KES 7,000/year |
+| Business Elite | KES 25,000/year |
 
 ### 2. Set up the database
 
