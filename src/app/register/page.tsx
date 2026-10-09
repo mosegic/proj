@@ -45,8 +45,10 @@ export default function RegisterPage() {
 <footer className="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3">
   <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-center gap-3">
     <p className="text-xs text-gray-400">
-      onlinemenusaas@gmail.com
-    </p>
+  <a href="https://www.menusaas.online" target="_blank" rel="noopener noreferrer" className="hover:underline">
+    Powered by MenuSaaS
+  </a>
+</p>
     {/* Your Facebook Link */}
 <a
   href="https://www.facebook.com/profile.php?id=61594332673347"
