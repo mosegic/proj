@@ -9,13 +9,14 @@ export default function RegisterPage() {
         {/* Header Section */}
         <div className="text-center mb-8"> 
           <Link href="/" className="inline-flex items-center gap-2 mb-4 group"> 
-            <div className="w-16 h-16 bg-blue rounded-lg flex items-center justify-center p-3">
+         <div className="w-16 h-16 bg-black rounded-lg flex items-center justify-center p-3">
   <img 
     src="https://res.cloudinary.com/mm0aipwg/image/upload/v1788695473/1788694955851.jpg" 
     alt="MSS Logo" 
     className="w-full h-full object-contain" 
   />
 </div>
+
 
             <span className="font-bold text-xl">MenuSaaS</span> 
           </Link> 
