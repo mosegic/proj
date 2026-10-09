@@ -8,7 +8,7 @@ export default function HomePage() {
       {/* Navigation */}
       <nav className="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2">
-         <div className="w-16 h-16 bg-black rounded-lg flex items-center justify-center p-3">
+         <div className="w-16 h-16 bg-blue rounded-lg flex items-center justify-center p-3">
   <img 
     src="https://res.cloudinary.com/mm0aipwg/image/upload/v1788695473/1788694955851.jpg" 
     alt="MSS Logo" 
@@ -31,8 +31,8 @@ export default function HomePage() {
       <main className="max-w-6xl mx-auto px-4 py-20 text-center">
         {/* Hero Section */}
         <h1 className="text-4xl sm:text-6xl font-bold text-gray-900 leading-tight">
-          Digital Online-Menu <br />
-          <span className="text-blue-600">Modern Restaurant</span>
+          Digital-Online Menus For <br />
+          <span className="text-blue-600">Modern Restaurants</span>
         </h1>
         <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
           Create beautiful digital mobile menus, manage your catalog in real-time,
