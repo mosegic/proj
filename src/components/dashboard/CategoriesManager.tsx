@@ -165,7 +165,8 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
       <div key={i} className="h-16 bg-gray-100 rounded-lg" />
     ))}</div>;
   }
-  const atCategoryLimit = tier === "standard" && categories.length >= 5;
+  const categoryLimit = tier === "elite" ? 100 : 5;
+  const atCategoryLimit = categories.length >= categoryLimit;
 
   return (
     <div className="space-y-4">
@@ -175,7 +176,7 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
           size="sm"
           onClick={() => setShowForm(!showForm)}
           disabled={atCategoryLimit || busy}
-          title={atCategoryLimit ? "Standard plans are limited to 5 categories" : undefined}
+          title={atCategoryLimit ? `Your plan is limited to ${categoryLimit} categories` : undefined}
         >
           {showForm ? "Cancel" : "+ Add Category"}
         </Button>
@@ -183,7 +184,7 @@ export function CategoriesManager({ restaurantId }: { restaurantId: string }) {
       {error && <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-700">{error}</p>}
       {atCategoryLimit && (
         <p className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
-          You have reached the Standard plan limit of 5 categories. Upgrade to Elite to add more.
+          You have reached your plan limit of {categoryLimit} categories.
         </p>
       )}
 

@@ -319,7 +319,8 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
   }
 
   const selectedCategory = categories.find((category) => category.id === form.categoryId);
-  const atItemLimit = tier === "standard" && (selectedCategory?._count?.items ?? 0) >= 15;
+  const itemLimit = tier === "elite" ? 100 : 15;
+  const atItemLimit = (selectedCategory?._count?.items ?? 0) >= itemLimit;
 
   return (
     <div className="space-y-4">
@@ -329,7 +330,7 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
           size="sm"
           onClick={() => setShowForm(!showForm)}
           disabled={categories.length === 0 || atItemLimit || busy}
-          title={atItemLimit ? "Standard plans are limited to 15 items per category" : undefined}
+          title={atItemLimit ? `Your plan is limited to ${itemLimit} items per category` : undefined}
         >
           {showForm ? "Cancel" : "+ Add Item"}
         </Button>
@@ -343,7 +344,7 @@ export function MenuItemsManager({ restaurantId }: { restaurantId: string }) {
       )}
       {atItemLimit && (
         <p className="text-amber-800 text-sm bg-amber-50 border border-amber-200 p-3 rounded-lg">
-          This category has reached the Standard plan limit of 15 items. Upgrade to Elite or choose another category.
+          This category has reached your plan limit of {itemLimit} items.
         </p>
       )}
 

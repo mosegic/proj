@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
   const categoryLimit = await canAddCategory(body.restaurantId);
   if (!categoryLimit.allowed) {
     return jsonError(
-      `Standard plan is limited to ${TIER_LIMITS.standard.maxCategories} categories. Upgrade to Business Elite to add more.`,
+      `${categoryLimit.tier === "elite" ? "Business Elite" : "Standard"} plan is limited to ${TIER_LIMITS[categoryLimit.tier].maxCategories} categories.`,
       403,
     );
   }

@@ -8,7 +8,7 @@ export const TIER_LIMITS: Record<
   { maxCategories: number; maxItemsPerCategory: number }
 > = {
   standard: { maxCategories: 5, maxItemsPerCategory: 15 },
-  elite: { maxCategories: Infinity, maxItemsPerCategory: Infinity },
+  elite: { maxCategories: 100, maxItemsPerCategory: 100 },
 };
 
 export async function getRestaurantTier(restaurantId: string): Promise<SubscriptionTier> {
@@ -40,24 +40,20 @@ export async function getRestaurantTier(restaurantId: string): Promise<Subscript
 
 export async function canAddCategory(restaurantId: string) {
   const tier = await getRestaurantTier(restaurantId);
-  if (tier === "elite") return { allowed: true, tier };
-
   const currentCount = await db.category.count({ where: { restaurantId } });
   return {
-    allowed: currentCount < TIER_LIMITS.standard.maxCategories,
+    allowed: currentCount < TIER_LIMITS[tier].maxCategories,
     tier,
   };
 }
 
 export async function canAddMenuItem(restaurantId: string, categoryId: string) {
   const tier = await getRestaurantTier(restaurantId);
-  if (tier === "elite") return { allowed: true, tier };
-
   const currentCount = await db.menuItem.count({
     where: { categoryId, category: { restaurantId } },
   });
   return {
-    allowed: currentCount < TIER_LIMITS.standard.maxItemsPerCategory,
+    allowed: currentCount < TIER_LIMITS[tier].maxItemsPerCategory,
     tier,
   };
 }
