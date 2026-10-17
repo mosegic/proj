@@ -80,8 +80,8 @@ export default function HomePage() {
         {/* Pricing Section */}
         <section className="mt-24 text-left">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900">Growth Plans</h2>
-            <p className="mt-3 text-gray-600">Products and Services, Profit Focus, Scale.</p>
+            <h2 className="text-3xl font-bold text-gray-900">Increase Customer Satisfaction Plans</h2>
+            <p className="mt-3 text-gray-600">Speed up interactions, personalize support, and removing friction</p>
           </div>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
